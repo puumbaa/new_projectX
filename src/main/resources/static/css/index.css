@@ -1,0 +1,52 @@
+body{
+    background-color: #101010;
+}
+.navbar-nav {
+    display: flex;
+    justify-content: space-around;
+    flex-basis: 55vw;
+}
+.navbar-header{
+    display: flex;
+    justify-content: space-between;
+}
+.navbar-nav .btn,.navbar-nav .btn:hover{
+    color: white;
+}
+.nav-link{
+    color: white;
+    font-size: 18px;
+    min-width: fit-content;
+}
+
+.nav-link:hover{
+    color: #E1E1E2;
+}
+.btn:focus{
+    color: white;
+    border: none !important;
+    box-shadow: none !important;
+    outline: 0 none !important;
+}
+
+.navbar-header h2 a{
+    font-size: 28px;
+}
+#navbarNav{
+    display: flex;
+    justify-content: space-between;
+}
+.navbar>.container-fluid{
+    padding: 0 10vw;
+}
+.navbar{
+    min-height: 12vh;
+}
+.btn-text{
+    font-size: 18px;
+    margin: 0;
+}
+.row{
+    background-color: black;
+    min-width: 100vw;
+}
