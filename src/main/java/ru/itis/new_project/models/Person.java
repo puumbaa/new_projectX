@@ -1,13 +1,17 @@
 package ru.itis.new_project.models;
 
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 @Data
 @Entity(name = "person")
+@Builder
+@NoArgsConstructor
 public class Person {
 
     @Id

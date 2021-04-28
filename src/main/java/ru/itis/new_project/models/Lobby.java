@@ -1,6 +1,8 @@
 package ru.itis.new_project.models;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import java.util.Calendar;
 
 @Data
 @Entity(name = "lobby")
+@Builder
+@NoArgsConstructor
 public class Lobby {
     @Id
     private Integer id;

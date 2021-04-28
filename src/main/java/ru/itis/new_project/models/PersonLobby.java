@@ -1,14 +1,17 @@
 package ru.itis.new_project.models;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
-
 @Table(name = "person_lobby")
+@Builder
+@NoArgsConstructor
 public class PersonLobby {
     @Id
     private Integer id;
