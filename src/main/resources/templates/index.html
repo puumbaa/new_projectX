@@ -58,6 +58,13 @@
 
 
 
+<div class="container-fluid">
+    <div th:each="lobby:${lobbies}">
+        <h3 th:text="${lobby.eventName}"></h3>
+        <h5 th:text="${lobby.brieflyInfo}"></h5>
+    </div>
+</div>
+
 
 
 

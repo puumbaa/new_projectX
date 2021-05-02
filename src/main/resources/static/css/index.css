@@ -50,3 +50,8 @@ body{
     background-color: black;
     min-width: 100vw;
 }
+h2{
+    color: aquamarine;
+    size: 40px;
+    font-family: Calibri;
+}
