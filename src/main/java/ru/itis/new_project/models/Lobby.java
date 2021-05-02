@@ -1,22 +1,29 @@
 package ru.itis.new_project.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity(name = "lobby")
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
+
 public class Lobby {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToMany(mappedBy = "lobbySet")
+    private Set<Person> personSet = new HashSet<>();
+
     @Column(name = "event_name")
     private String eventName;
     @Column(name = "briefly_info")
@@ -36,12 +43,4 @@ public class Lobby {
     @Column(name = "is_full")
     private boolean isFull;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    @Id
-    public Integer getId() {
-        return id;
-    }
 }
