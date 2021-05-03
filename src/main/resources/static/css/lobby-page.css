@@ -1,0 +1,29 @@
+.lobby-name{
+    color: white;
+    margin-bottom: 10vh;
+    font-size: 48px;
+}
+
+.lobby-buttons{
+    display: flex;
+    justify-content: space-around;
+}
+.lobby-container{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    align-items: center
+}
+.about-info{
+    margin-top: 0;
+    margin-bottom: 3rem;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+}
+
+.lobby-about-container{
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+}

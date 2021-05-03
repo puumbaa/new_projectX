@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ import java.util.Set;
 public class Lobby {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToMany(mappedBy = "lobbySet")
     private Set<Person> personSet = new HashSet<>();
@@ -43,4 +44,7 @@ public class Lobby {
     @Column(name = "is_full")
     private boolean isFull;
 
+    public String getSimpleDate(){
+        return this.dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
 }
