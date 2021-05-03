@@ -47,4 +47,8 @@ public class Lobby {
     public String getSimpleDate(){
         return this.dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
+
+    public String getSimpleTime(){
+        return this.dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
 }

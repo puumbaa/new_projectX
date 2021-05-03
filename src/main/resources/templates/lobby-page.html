@@ -34,25 +34,48 @@
 
 <div class="lobby-container">
 
-    <h2 th:text="${lobby.eventName}" class="lobby-name"></h2>
 
 
     <div class="lobby-about-container">
 
-        <div>
-            <p class="about-info" th:text="${lobby.aboutEvent}"></p>
+        <h2 th:text="${lobby.eventName}" class="lobby-name"></h2>
+
+        <div class="about-info">
+            <p  th:text="${lobby.aboutEvent}"></p>
         </div>
 
 
         <div class="lobby-buttons">
-            <form action="/lobbies/leave" method="POST">
-                <button type="submit" class="btn-secondary">Выйти</button>
-            </form>
 
-            <a th:href="${lobby.chatLink}"> <button class="btn-info" type="button">В беседу</button> </a>
+                <form action="/lobbies/leave" method="POST">
+                    <button type="submit" class="btn btn-secondary">Выйти</button>
+                </form>
+
+                <a th:href="${lobby.chatLink}"> <button class="btn btn-info" type="button">В беседу</button> </a>
+
         </div>
 
 
+        <div class="lobby-data">
+            <div>
+                <p>Заполненность</p>
+                <span th:text="${lobby.countOfMembers}"></span>
+                <span>/</span>
+                <span th:text="${lobby.capacity}"></span>
+            </div>
+
+            <div class="date-time">
+                <div>
+                <p>Дата:</p>
+                <span th:text="${lobby.getSimpleDate()}"></span>
+                </div>
+
+                <div>
+                <p>Время:</p>
+                <span th:text="${lobby.getSimpleTime()}"></span>
+                </div>
+            </div>
+        </div>
         <!-- TODO СДЕЛАТЬ ДИВ ДЛЯ ЗАПОЛНЕННОСТИ ЛОББИ И ДАТЫ / ВРЕМЯ -->
 
     </div>

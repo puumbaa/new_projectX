@@ -1,29 +1,69 @@
-.lobby-name{
-    color: white;
+.lobby-name {
+    color: #212529;
     margin-bottom: 10vh;
     font-size: 48px;
+    text-align: center;
 }
 
-.lobby-buttons{
+.lobby-buttons {
     display: flex;
     justify-content: space-around;
 }
-.lobby-container{
+
+.lobby-container {
     display: flex;
     flex-direction: column;
     margin-top: 10vh;
     align-items: center
 }
-.about-info{
+
+.about-info {
+    display: flex;
+    justify-content: center;
     margin-top: 0;
-    margin-bottom: 3rem;
-    color: #fff;
+    padding-top: .7rem;
+    margin-bottom: 1rem;
+    color: #212529;
     font-size: 20px;
     text-align: center;
+    min-height: 30vh;
+    background-color: rgba(0, 0, 0, .22);
+    border: 1px solid #212529;
+    border-radius: 10px;
 }
 
-.lobby-about-container{
+.lobby-about-container {
     display: flex;
     flex-direction: column;
     width: 60vw;
 }
+
+.lobby-data {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 8vh;
+}
+
+.lobby-data p{
+    color: #212529;
+    margin-bottom: 0;
+}
+span{
+    color: #212529;
+}
+.date-time{
+    display: flex;
+    justify-content: space-between;
+    width: 10vw;
+
+}
+.date-time div{
+    padding-bottom: 3vh;
+}
+
+.lobby-buttons button {
+    width: 10vw;
+    font-size: 20px;
+    color: #212529;
+}
+
