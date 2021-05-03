@@ -44,17 +44,17 @@
     padding-top: 8vh;
 }
 
-.lobby-data p{
+.lobby-data p, span{
     color: #212529;
-    margin-bottom: 0;
+    font-size: 18px;
 }
-span{
-    color: #212529;
+.lobby-data p {
+    margin-bottom: 0;
 }
 .date-time{
     display: flex;
     justify-content: space-between;
-    width: 10vw;
+    width: 11vw;
 
 }
 .date-time div{
@@ -64,6 +64,11 @@ span{
 .lobby-buttons button {
     width: 10vw;
     font-size: 20px;
-    color: #212529;
+    color: #fff;
+    background-color: #212529;
 }
+.btn:hover{
+    color: white;
+}
+
 
