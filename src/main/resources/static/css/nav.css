@@ -57,3 +57,7 @@ body {
 .navbar {
     min-height: 12vh;
 }
+
+.modal{
+    top: 15vh;
+}

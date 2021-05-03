@@ -6,20 +6,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.new_project.models.Lobby;
 import ru.itis.new_project.repositories.LobbyRepository;
 
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 @Controller
-public class MainController {
+public class MainPageController {
     @Autowired
     LobbyRepository lobbyRepository;
 
-    @GetMapping("/")
+    @GetMapping("/lobbies")
     public String greeting(Model model) {
         model.addAttribute("lobbies", lobbyRepository.findAll());
         return "index";
@@ -35,5 +39,22 @@ public class MainController {
         return "redirect:/lobbies";
     }
 
+    @PostMapping("/lobbies/add")
+    public String addLobby(@RequestParam String eventName, @RequestParam String brieflyInfo,
+                           @RequestParam String dateTime,@RequestParam Integer capacity,
+                           @RequestParam String aboutEvent, @RequestParam String chatLink){
 
+        lobbyRepository.save(Lobby.builder()
+                .eventName(eventName)
+                .brieflyInfo(brieflyInfo)
+                .dateTime(Timestamp.valueOf((dateTime+":00").replaceAll("T"," ")))
+                .countOfMembers(1)
+                .capacity(capacity)
+                .aboutEvent(aboutEvent)
+                .chatLink(chatLink)
+                .isActual(true)
+                .isFull(false)
+                .build());
+        return "redirect:/lobbies";
+    }
 }

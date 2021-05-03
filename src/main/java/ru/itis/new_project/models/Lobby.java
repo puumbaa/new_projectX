@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -30,6 +31,7 @@ public class Lobby {
     @Column(name = "briefly_info")
     private String brieflyInfo;
     @Column(name = "date_time")
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private Timestamp dateTime;
     @Column(name = "count_of_members")
     private Integer countOfMembers;
