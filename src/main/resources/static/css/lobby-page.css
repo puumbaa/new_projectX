@@ -1,6 +1,6 @@
 .lobby-name {
     color: #212529;
-    margin-bottom: 10vh;
+    margin-bottom: 4vh;
     font-size: 48px;
     text-align: center;
 }
@@ -19,15 +19,17 @@
 
 .about-info {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     margin-top: 0;
     padding-top: .7rem;
+    padding-left: 1.7rem;
+    padding-right: 1.7rem;
     margin-bottom: 1rem;
     color: #212529;
     font-size: 20px;
     text-align: center;
-    min-height: 30vh;
-    background-color: #D9DADF;
+    min-height: 36vh;
+    background-color: #F6F7F8;
     border: 1px solid #212529;
     border-radius: 10px;
 }
