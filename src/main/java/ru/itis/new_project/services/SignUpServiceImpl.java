@@ -32,4 +32,16 @@ public class SignUpServiceImpl implements SignUpService{
 
         personRepository.save(person);
     }
+
+    @Override
+    public boolean validateSuccess(PersonForm personForm) {
+        if(personForm.getName().length()<2 || personForm.getName().length()>60){
+            return false;
+        }
+        if(!personForm.getEmail().matches("[a-zA-Z0-9]*@.[a-zA-Z]*")){
+           return false;
+        }
+        if(personForm.getPassword().length()<8) return false;
+        return true;
+    }
 }

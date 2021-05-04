@@ -14,7 +14,6 @@ public class PersonDetailsServiceImpl implements UserDetailsService {
     PersonRepository personRepository;
 
 
-    //TODO Адаптировать к нормальной работе. Убрать выбрасывание исключения
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return new PersonDetailsImpl(

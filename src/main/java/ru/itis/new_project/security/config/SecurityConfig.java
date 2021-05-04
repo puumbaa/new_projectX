@@ -24,19 +24,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/my_lobbies/**").authenticated()
-                    .antMatchers("/sign_up/**").permitAll()
-                    .antMatchers("/css/**").permitAll()
-                    .antMatchers("/").permitAll()
+                    .antMatchers("/myLobbies/**", "/profile","/lobbies/{[1-9].[0-9]*}").authenticated()
+                    .antMatchers("/sign_up/**", "/soon", "/lobbies").permitAll()
                 .and()
                     .formLogin()
                         .usernameParameter("login")
-                        .defaultSuccessUrl("/my_lobbies")
+                        .defaultSuccessUrl("/myLobbies")
                         .loginPage("/login")
                         .permitAll()
-                    .and()
-                        .rememberMe()
-                            .rememberMeParameter("remember-me");
+                .and()
+                    .logout()
+                        .permitAll()
+                .and()
+                    .rememberMe()
+                    .rememberMeParameter("remember-me");
 
         http.csrf().disable();
     }
@@ -46,5 +47,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 }
-
-//Добавил папку секьюрити и добавил в помку spring security starter

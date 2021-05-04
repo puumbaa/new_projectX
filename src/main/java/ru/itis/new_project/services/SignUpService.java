@@ -5,4 +5,5 @@ import ru.itis.new_project.models.forms.PersonForm;
 
 public interface SignUpService {
     void signUp(PersonForm personForm);
+    boolean validateSuccess(PersonForm personForm);
 }
