@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @Controller
 public class MainPageController {
+
     @Autowired
     LobbyRepository lobbyRepository;
 
@@ -28,6 +29,7 @@ public class MainPageController {
         model.addAttribute("lobbies", lobbyRepository.findAll());
         return "index";
     }
+
 
     @GetMapping("/lobbies/{id}")
     public String showLobbyPage(@PathVariable(value = "id") Long id, Model model) {
@@ -39,6 +41,11 @@ public class MainPageController {
         return "redirect:/lobbies";
     }
 
+//    @GetMapping("/my_lobbies")
+//    public String getPersonalLobbies()
+
+
+    //TODO Мб сделать дефолтные значения для вместимости
     @PostMapping("/lobbies/add")
     public String addLobby(@RequestParam String eventName, @RequestParam String brieflyInfo,
                            @RequestParam String dateTime,@RequestParam Integer capacity,

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.itis.new_project.models.enums.Role;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -41,5 +42,10 @@ public class Person {
     private String email;
     @Column(name = "password")
     private String password;
+    @Column(name = "role")
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+    @Column(name = "contacts")
+    private String contacts;
 
 }
