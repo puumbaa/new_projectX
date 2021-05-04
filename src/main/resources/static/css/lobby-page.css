@@ -1,0 +1,76 @@
+.lobby-name {
+    color: #212529;
+    margin-bottom: 4vh;
+    font-size: 48px;
+    text-align: center;
+}
+
+.lobby-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.lobby-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    align-items: center
+}
+
+.about-info {
+    display: flex;
+    justify-content: start;
+    margin-top: 0;
+    padding-top: .7rem;
+    padding-left: 1.7rem;
+    padding-right: 1.7rem;
+    margin-bottom: 1rem;
+    color: #212529;
+    font-size: 20px;
+    text-align: center;
+    min-height: 36vh;
+    background-color: #F6F7F8;
+    border: 1px solid #212529;
+    border-radius: 10px;
+}
+
+.lobby-about-container {
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+}
+
+.lobby-data {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 8vh;
+}
+
+.lobby-data p, span{
+    color: #212529;
+    font-size: 18px;
+}
+.lobby-data p {
+    margin-bottom: 0;
+}
+.date-time{
+    display: flex;
+    justify-content: space-between;
+    width: 11vw;
+
+}
+.date-time div{
+    padding-bottom: 3vh;
+}
+
+.lobby-buttons button {
+    width: 10vw;
+    font-size: 20px;
+    color: #fff;
+    background-color: #212529;
+}
+.btn:hover{
+    color: white;
+}
+
+

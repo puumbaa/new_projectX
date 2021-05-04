@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +21,7 @@ import java.util.Set;
 public class Lobby {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToMany(mappedBy = "lobbySet")
     private Set<Person> personSet = new HashSet<>();
@@ -29,6 +31,7 @@ public class Lobby {
     @Column(name = "briefly_info")
     private String brieflyInfo;
     @Column(name = "date_time")
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private Timestamp dateTime;
     @Column(name = "count_of_members")
     private Integer countOfMembers;
@@ -43,4 +46,11 @@ public class Lobby {
     @Column(name = "is_full")
     private boolean isFull;
 
+    public String getSimpleDate(){
+        return this.dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }
+
+    public String getSimpleTime(){
+        return this.dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
 }
