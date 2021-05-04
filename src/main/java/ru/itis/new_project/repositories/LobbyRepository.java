@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import ru.itis.new_project.models.Lobby;
 
 @Repository
-public interface LobbyRepository extends JpaRepository<Lobby,Integer> {
+public interface LobbyRepository extends JpaRepository<Lobby,Long> {
 
 }
