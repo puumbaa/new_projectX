@@ -4,16 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
+import ru.itis.new_project.models.enums.Categories;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity(name = "lobby")
+@Table(name = "lobby")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,9 +30,11 @@ public class Lobby {
     private String eventName;
     @Column(name = "briefly_info")
     private String brieflyInfo;
-    @Column(name = "date_time")
-    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
-    private Timestamp dateTime;
+    @Column(name = "event_category")
+    @Enumerated(value = EnumType.STRING)
+    public Categories eventCategory;
+    @Column(name = "event_date")
+    private LocalDate eventDate;
     @Column(name = "count_of_members")
     private Integer countOfMembers;
     @Column(name = "capacity")
@@ -46,11 +48,12 @@ public class Lobby {
     @Column(name = "is_full")
     private boolean isFull;
 
+
+
     public String getSimpleDate(){
-        return this.dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        String[] split = this.eventDate.toString().split("-");
+        return split[2]+"."+split[1]+"."+split[0];
     }
 
-    public String getSimpleTime(){
-        return this.dateTime.toLocalDateTime().format(DateTimeFormatter.ofPattern("HH:mm"));
-    }
+
 }
