@@ -1,7 +1,35 @@
 .container-sort{
-    padding: 0 5rem;
-    margin-right: auto;
-    margin-left: auto;
+    padding: 2rem 5rem;
+    margin-right: 6.5vw;
+    margin-left: 6.5vw;
+    margin-top: 5vh;
+    background-color: #F6F7F8;
+    border: 1px solid #101010;
+    border-radius: 10px;
+}
+
+input#capacity-start, input#capacity-end {
+    width: 4vw;
+    margin-top: 2vh;
+}
+
+.pair-category{
+    display: flex;
+    flex-direction: column;
+}
+.pair-category-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 30vw;
+}
+.sort-form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn-sort{
+    height: 6vh;
 }
 .row {
     background-color: black;
@@ -18,7 +46,7 @@ h2 {
     display: flex;
     flex-direction: row;
     justify-content: start;
-    margin-top: 20vh;
+    margin-top: 8vh;
     flex-wrap: wrap;
     min-width: 96vw;
     max-width: 96vw;
