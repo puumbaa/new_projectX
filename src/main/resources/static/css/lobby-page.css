@@ -53,13 +53,8 @@
 .lobby-data p {
     margin-bottom: 0;
 }
-.date-time{
-    display: flex;
-    justify-content: space-between;
-    width: 11vw;
 
-}
-.date-time div{
+.date div{
     padding-bottom: 3vh;
 }
 

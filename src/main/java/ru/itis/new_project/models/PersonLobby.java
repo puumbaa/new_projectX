@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "person_lobby")
 @IdClass(PersonLobby.PersonLobbyKey.class)
 public class PersonLobby {
 

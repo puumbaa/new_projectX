@@ -58,8 +58,7 @@
                 <button type="button" class="btn btn-primary">Enter</button>
 
 
-
-                <form  method="GET" class="modal-go-to">
+                <form method="GET" class="modal-go-to">
                     <button type="submit" class="btn btn-secondary">Go to lobby page</button>
                 </form>
             </div>
@@ -72,8 +71,50 @@
 
 <header th:insert="blocks/nav.html :: nav"></header>
 
+<div class="container-sort">
+    <div class="sort-form">
+        <form action="/lobbies/sort" name="sort" method="GET">
+
+            <div>
+                <label for="date-start">Дата начала</label>
+                <input type="date" name="date-star" id="date-start">
+
+                <label for="date-end">Дата конца</label>
+                <input type="date" name="date-end" id="date-end">
+            </div>
+
+            <div>
+                <span>Количество человек</span>
+                <label for="capacity-start">от:</label>
+                <input type="number" name="capacity-start" id="capacity-start">
+
+                <label for="capacity-start">до:</label>
+                <input type="number" name="capacity-end" id="capacity-end">
+
+            </div>
+
+           <div>
+                <label for="category">Категория</label>
+                <select name="category" id="category">
+                    <option value="SPORT">Спортивное</option>
+                    <option value="BOARD_GAME">Настольные игры</option>
+                    <option value="DEVELOPMENT">Развитие</option>
+                    <option value="LEISURE">Активный отдых</option>
+                    <option value="PARTY">Тусовка</option>
+                    <option value="SOCIAL">Социальное</option>
+                    <option value="OTHER">Другое</option>
+                </select>
+
+                <button class="btn btn-sort" type="submit" >Отсортировать</button>
+           </div>
+
+        </form>
+    </div>
+</div>
 
 <div class="container-fluid lobbies">
+
+
     <div th:each="lobby:${lobbies}" class="lobby">
         <h3 th:text="${lobby.eventName}"></h3>
         <div class="btn-cont">
@@ -110,7 +151,7 @@
         var id = $(event.relatedTarget).data('id')
         var modal = $(this)
         var a = document.querySelector("form");
-        a.setAttribute("action", "/lobbies/"+id);
+        a.setAttribute("action", "/lobbies/" + id);
         modal.find('.modal-title').text(title)
         modal.find('.modal-info').text(info)
     })
