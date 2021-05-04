@@ -72,44 +72,72 @@
 <header th:insert="blocks/nav.html :: nav"></header>
 
 <div class="container-sort">
-    <div class="sort-form">
-        <form action="/lobbies/sort" name="sort" method="GET">
 
-            <div>
-                <label for="date-start">Дата начала</label>
+    <form action="/lobbies/sort" name="sort" method="GET" class="sort-form">
+
+        <div>
+            <div class="date-fields-container">
+
+                <label for="date-start">Дата:  </label>
                 <input type="date" name="date-star" id="date-start">
 
-                <label for="date-end">Дата конца</label>
+                <label for="date-end"> - </label>
                 <input type="date" name="date-end" id="date-end">
             </div>
 
             <div>
-                <span>Количество человек</span>
-                <label for="capacity-start">от:</label>
+
+                <label for="capacity-start">Количество человек:  </label>
                 <input type="number" name="capacity-start" id="capacity-start">
 
-                <label for="capacity-start">до:</label>
+                <label for="capacity-end"> - </label>
                 <input type="number" name="capacity-end" id="capacity-end">
 
             </div>
+        </div>
 
-           <div>
-                <label for="category">Категория</label>
-                <select name="category" id="category">
-                    <option value="SPORT">Спортивное</option>
-                    <option value="BOARD_GAME">Настольные игры</option>
-                    <option value="DEVELOPMENT">Развитие</option>
-                    <option value="LEISURE">Активный отдых</option>
-                    <option value="PARTY">Тусовка</option>
-                    <option value="SOCIAL">Социальное</option>
-                    <option value="OTHER">Другое</option>
-                </select>
+        <div class="pair-category-container">
+            <div class="pair-category">
+                <div>
+                <input type="checkbox" id="sport" name="sport" value="SPORT">
+                <label for="sport">Спортивное</label>
+                </div>
 
-                <button class="btn btn-sort" type="submit" >Отсортировать</button>
-           </div>
+                <div>
+                <input type="checkbox" id="board-game" name="board-game" value="BOARD_GAME">
+                <label for="board-game">Настольные игры</label>
+                </div>
+            </div>
 
-        </form>
-    </div>
+            <div class="pair-category">
+                <div>
+                <input type="checkbox" id="development" name="development" value="DEVELOPMENT">
+                <label for="development">Развитие</label>
+                </div>
+
+                <div>
+                <input type="checkbox" id="leisure" name="leisure" value="LEISURE">
+                <label for="leisure">Активный отдых</label>
+                </div>
+            </div>
+
+            <div class="pair-category">
+                <div>
+                <input type="checkbox" id="party" name="party" value="PARTY">
+                <label for="party">Тусовка</label>
+                </div>
+
+                <div>
+                <input type="checkbox" id="social" name="social" value="SOCIAL">
+                <label for="social">Социальное</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-dark btn-sort" type="submit">Отсортировать</button>
+
+
+    </form>
 </div>
 
 <div class="container-fluid lobbies">
