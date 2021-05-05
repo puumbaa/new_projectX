@@ -13,6 +13,7 @@ import ru.itis.new_project.models.Lobby;
 import ru.itis.new_project.models.enums.Categories;
 import ru.itis.new_project.repositories.LobbyRepository;
 import ru.itis.new_project.services.LobbyService;
+import ru.itis.new_project.services.facades.IAuthenticationFacade;
 
 import java.time.LocalDate;
 
@@ -21,6 +22,9 @@ import java.util.*;
 
 @Controller
 public class MainPageController {
+
+    @Autowired
+    private IAuthenticationFacade authFacade;
 
     @Autowired
     LobbyRepository lobbyRepository;
@@ -37,8 +41,9 @@ public class MainPageController {
             @RequestParam(value = "leisure", required = false) Categories leisure,
             @RequestParam(value = "party", required = false) Categories party,
             @RequestParam(value = "social", required = false) Categories social,
-            Model model, Authentication auth) {
-        System.out.println(auth.getName());
+            Model model) {
+        Authentication auth = authFacade.getAuthentication();
+
         List<Categories> categories = Arrays.asList(sport, boardGame, development, leisure, party, social);
         // HARDCODE НО ЕГО ЛУЧШЕ НЕ УБИРАТЬ
         LocalDate beginDate = dateStart.equals("") ? LocalDate.parse("2021-01-01") : LobbyService.getDate(dateStart);
@@ -59,19 +64,25 @@ public class MainPageController {
                     capStart, capEnd, beginDate, endDate));
         }
         model.addAttribute("lobbies", lobbyList);
-        return "index";
+        System.out.println(auth.isAuthenticated());
+        System.out.println(auth.getName());
+        return !auth.getName().equals("anonymousUser") ? "index-auth" : "index";
     }
 
 
     @GetMapping("/lobbies")
     public String greeting(Model model) {
         model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
-        return "index";
+        Authentication auth = authFacade.getAuthentication();
+        return auth.isAuthenticated() ? "index-auth" : "index";
     }
 
 
     @GetMapping("/lobbies/{id}")
     public String showLobbyPage(@PathVariable(value = "id") Long id, Model model) {
+        Authentication auth = authFacade.getAuthentication();
+        if(!auth.isAuthenticated()) return "login";
+
         Optional<Lobby> lobby = lobbyRepository.findById(id);
         if (lobby.isPresent()) {
             model.addAttribute("lobby", lobby.get());
