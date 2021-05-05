@@ -22,8 +22,13 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous">
     </script>
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/nav.css">
+
+
+
+
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/nav.css">
+
     <link rel="stylesheet" href="../static/css/index.css">
     <link rel="stylesheet" href="../static/css/nav.css">
 
@@ -73,25 +78,25 @@
 
 <div class="container-sort">
 
-    <form action="/lobbies/sort" name="sort" method="GET" class="sort-form">
+    <form action="/lobbies/sort" name="sort" method="get" class="sort-form" >
 
         <div>
             <div class="date-fields-container">
 
                 <label for="date-start">Дата:  </label>
-                <input type="date" name="date-star" id="date-start">
+                <input type="date" name="date-start" id="date-start" >
 
                 <label for="date-end"> - </label>
-                <input type="date" name="date-end" id="date-end">
+                <input type="date" name="date-end" id="date-end" >
             </div>
 
             <div>
 
                 <label for="capacity-start">Количество человек:  </label>
-                <input type="number" name="capacity-start" id="capacity-start">
+                <input type="number" name="capacity-start" id="capacity-start" >
 
                 <label for="capacity-end"> - </label>
-                <input type="number" name="capacity-end" id="capacity-end">
+                <input type="number" name="capacity-end" id="capacity-end" >
 
             </div>
         </div>
@@ -99,19 +104,19 @@
         <div class="pair-category-container">
             <div class="pair-category">
                 <div>
-                <input type="checkbox" id="sport" name="sport" value="SPORT">
+                <input type="checkbox" id="sport" name="sport" value="SPORT" >
                 <label for="sport">Спортивное</label>
                 </div>
 
                 <div>
-                <input type="checkbox" id="board-game" name="board-game" value="BOARD_GAME">
+                <input type="checkbox" id="board-game" name="board-game" value="BOARD_GAME" >
                 <label for="board-game">Настольные игры</label>
                 </div>
             </div>
 
             <div class="pair-category">
                 <div>
-                <input type="checkbox" id="development" name="development" value="DEVELOPMENT">
+                <input type="checkbox" id="development" name="development" value="DEVELOPMENT" >
                 <label for="development">Развитие</label>
                 </div>
 
@@ -123,18 +128,18 @@
 
             <div class="pair-category">
                 <div>
-                <input type="checkbox" id="party" name="party" value="PARTY">
+                <input type="checkbox" id="party" name="party" value="PARTY" >
                 <label for="party">Тусовка</label>
                 </div>
 
                 <div>
-                <input type="checkbox" id="social" name="social" value="SOCIAL">
+                <input type="checkbox" id="social" name="social" value="SOCIAL" >
                 <label for="social">Социальное</label>
                 </div>
             </div>
         </div>
 
-        <button class="btn btn-dark btn-sort" type="submit">Отсортировать</button>
+        <button class="btn btn-dark btn-sort ntSaveFormsSubmit" type="submit">Применить</button>
 
 
     </form>
@@ -183,7 +188,12 @@
         modal.find('.modal-title').text(title)
         modal.find('.modal-info').text(info)
     })
+
 </script>
+
+
+
+
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>
 <!-- Bootstrap JS -->
 <script src="/examples/libs/bootstrap-3/js/bootstrap.min.js"></script>
