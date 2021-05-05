@@ -1,4 +1,36 @@
+.container-sort{
+    padding: 2rem 5rem;
+    margin-right: 6.5vw;
+    margin-left: 6.5vw;
+    margin-top: 5vh;
+    background-color: #F6F7F8;
+    border: 1px solid #101010;
+    border-radius: 10px;
+}
 
+input#capacity-start, input#capacity-end {
+    width: 4vw;
+    margin-top: 2vh;
+}
+
+.pair-category{
+    display: flex;
+    flex-direction: column;
+}
+.pair-category-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 30vw;
+}
+.sort-form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btn-sort{
+    height: 6vh;
+}
 .row {
     background-color: black;
     min-width: 100vw;
@@ -13,12 +45,17 @@ h2 {
 .lobbies {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-top: 5vh;
+    justify-content: start;
+    margin-top: 8vh;
     flex-wrap: wrap;
-    min-width: 100%;
-    max-width: 100%;
-    padding: 3% 8%;
+    min-width: 96vw;
+    max-width: 96vw;
+    padding: 0 5vw;
+}
+
+
+.lobbies .lobby:nth-child(4n+4){
+    margin-right: 0;
 }
 
 .lobby {
@@ -29,7 +66,7 @@ h2 {
     border-radius: 20px;
     word-wrap: break-word;
     margin-bottom: 5vh;
-
+    margin-right: 2vw;
     -webkit-transition: 0.3s;
     -moz-transition: .3s;
     -o-transition: .3s;

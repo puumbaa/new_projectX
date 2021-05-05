@@ -58,8 +58,7 @@
                 <button type="button" class="btn btn-primary">Enter</button>
 
 
-
-                <form  method="GET" class="modal-go-to">
+                <form method="GET" class="modal-go-to">
                     <button type="submit" class="btn btn-secondary">Go to lobby page</button>
                 </form>
             </div>
@@ -72,8 +71,78 @@
 
 <header th:insert="blocks/nav.html :: nav"></header>
 
+<div class="container-sort">
+
+    <form action="/lobbies/sort" name="sort" method="GET" class="sort-form">
+
+        <div>
+            <div class="date-fields-container">
+
+                <label for="date-start">Дата:  </label>
+                <input type="date" name="date-star" id="date-start">
+
+                <label for="date-end"> - </label>
+                <input type="date" name="date-end" id="date-end">
+            </div>
+
+            <div>
+
+                <label for="capacity-start">Количество человек:  </label>
+                <input type="number" name="capacity-start" id="capacity-start">
+
+                <label for="capacity-end"> - </label>
+                <input type="number" name="capacity-end" id="capacity-end">
+
+            </div>
+        </div>
+
+        <div class="pair-category-container">
+            <div class="pair-category">
+                <div>
+                <input type="checkbox" id="sport" name="sport" value="SPORT">
+                <label for="sport">Спортивное</label>
+                </div>
+
+                <div>
+                <input type="checkbox" id="board-game" name="board-game" value="BOARD_GAME">
+                <label for="board-game">Настольные игры</label>
+                </div>
+            </div>
+
+            <div class="pair-category">
+                <div>
+                <input type="checkbox" id="development" name="development" value="DEVELOPMENT">
+                <label for="development">Развитие</label>
+                </div>
+
+                <div>
+                <input type="checkbox" id="leisure" name="leisure" value="LEISURE">
+                <label for="leisure">Активный отдых</label>
+                </div>
+            </div>
+
+            <div class="pair-category">
+                <div>
+                <input type="checkbox" id="party" name="party" value="PARTY">
+                <label for="party">Тусовка</label>
+                </div>
+
+                <div>
+                <input type="checkbox" id="social" name="social" value="SOCIAL">
+                <label for="social">Социальное</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-dark btn-sort" type="submit">Отсортировать</button>
+
+
+    </form>
+</div>
 
 <div class="container-fluid lobbies">
+
+
     <div th:each="lobby:${lobbies}" class="lobby">
         <h3 th:text="${lobby.eventName}"></h3>
         <div class="btn-cont">
@@ -110,7 +179,7 @@
         var id = $(event.relatedTarget).data('id')
         var modal = $(this)
         var a = document.querySelector("form");
-        a.setAttribute("action", "/lobbies/"+id);
+        a.setAttribute("action", "/lobbies/" + id);
         modal.find('.modal-title').text(title)
         modal.find('.modal-info').text(info)
     })
