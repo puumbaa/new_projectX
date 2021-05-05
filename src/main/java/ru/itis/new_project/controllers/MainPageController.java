@@ -1,6 +1,7 @@
 package ru.itis.new_project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,8 +15,8 @@ import ru.itis.new_project.repositories.LobbyRepository;
 import ru.itis.new_project.services.LobbyService;
 
 import java.time.LocalDate;
-import java.util.*;
 
+import java.util.*;
 
 @Controller
 public class MainPageController {
@@ -86,6 +87,7 @@ public class MainPageController {
                            @RequestParam Integer capacity, @RequestParam String aboutEvent,
                            @RequestParam String chatLink) {
 
+
         lobbyRepository.save(Lobby.builder()
                 .eventName(eventName)
                 .brieflyInfo(brieflyInfo)
@@ -98,6 +100,7 @@ public class MainPageController {
                 .actual(true)
                 .isFull(false)
                 .build());
+
         return "redirect:/lobbies";
     }
 }
