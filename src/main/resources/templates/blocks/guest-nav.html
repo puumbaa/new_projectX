@@ -1,0 +1,30 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:fragment="guest-nav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <h2><a href="/lobbies" class="navbar-brand">Project X</a></h2>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link active"> Мои лобби </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link active"> Добавить лобби </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/soon" class="nav-link active"> Услуги </a>
+                    </li>
+                </ul>
+                <a href="/login" class="nav-link lk"> Войти </a>
+            </div>
+        </div>
+    </nav>
+</div>

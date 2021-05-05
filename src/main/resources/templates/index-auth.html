@@ -69,7 +69,7 @@
 <!--------------------------------  end Modal ---------------------------------------------------->
 
 
-<header th:insert="blocks/guest-nav.html :: guest-nav"></header>
+<header th:insert="blocks/nav.html :: nav"></header>
 
 <div class="container-sort">
 
@@ -79,7 +79,7 @@
             <div class="date-fields-container">
 
                 <label for="date-start">Дата:  </label>
-
+              
                 <input type="date" name="date-start" id="date-start">
 
                 <label for="date-end"> - </label>
@@ -100,37 +100,37 @@
         <div class="pair-category-container">
             <div class="pair-category">
                 <div>
-                    <input type="checkbox" id="sport" name="sport" value="SPORT">
-                    <label for="sport">Спортивное</label>
+                <input type="checkbox" id="sport" name="sport" value="SPORT">
+                <label for="sport">Спортивное</label>
                 </div>
 
                 <div>
-                    <input type="checkbox" id="board-game" name="board-game" value="BOARD_GAME">
-                    <label for="board-game">Настольные игры</label>
-                </div>
-            </div>
-
-            <div class="pair-category">
-                <div>
-                    <input type="checkbox" id="development" name="development" value="DEVELOPMENT">
-                    <label for="development">Развитие</label>
-                </div>
-
-                <div>
-                    <input type="checkbox" id="leisure" name="leisure" value="LEISURE">
-                    <label for="leisure">Активный отдых</label>
+                <input type="checkbox" id="board-game" name="board-game" value="BOARD_GAME">
+                <label for="board-game">Настольные игры</label>
                 </div>
             </div>
 
             <div class="pair-category">
                 <div>
-                    <input type="checkbox" id="party" name="party" value="PARTY">
-                    <label for="party">Тусовка</label>
+                <input type="checkbox" id="development" name="development" value="DEVELOPMENT">
+                <label for="development">Развитие</label>
                 </div>
 
                 <div>
-                    <input type="checkbox" id="social" name="social" value="SOCIAL">
-                    <label for="social">Социальное</label>
+                <input type="checkbox" id="leisure" name="leisure" value="LEISURE">
+                <label for="leisure">Активный отдых</label>
+                </div>
+            </div>
+
+            <div class="pair-category">
+                <div>
+                <input type="checkbox" id="party" name="party" value="PARTY">
+                <label for="party">Тусовка</label>
+                </div>
+
+                <div>
+                <input type="checkbox" id="social" name="social" value="SOCIAL">
+                <label for="social">Социальное</label>
                 </div>
             </div>
         </div>

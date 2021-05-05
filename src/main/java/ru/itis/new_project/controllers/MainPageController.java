@@ -18,6 +18,7 @@ import java.time.LocalDate;
 
 import java.util.*;
 
+
 @Controller
 public class MainPageController {
 
@@ -100,7 +101,6 @@ public class MainPageController {
                 .actual(true)
                 .isFull(false)
                 .build());
-
         return "redirect:/lobbies";
     }
 }
