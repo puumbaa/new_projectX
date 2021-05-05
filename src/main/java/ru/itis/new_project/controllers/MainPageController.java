@@ -74,14 +74,14 @@ public class MainPageController {
     public String greeting(Model model) {
         model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
         Authentication auth = authFacade.getAuthentication();
-        return auth.isAuthenticated() ? "index-auth" : "index";
+        return !auth.getName().equals("anonymousUser") ? "index-auth" : "index";
     }
 
 
     @GetMapping("/lobbies/{id}")
     public String showLobbyPage(@PathVariable(value = "id") Long id, Model model) {
         Authentication auth = authFacade.getAuthentication();
-        if(!auth.isAuthenticated()) return "login";
+        if(auth.getName().equals("anonymousUser")) return "login";
 
         Optional<Lobby> lobby = lobbyRepository.findById(id);
         if (lobby.isPresent()) {
@@ -92,7 +92,6 @@ public class MainPageController {
     }
 
 
-    //TODO Мб сделать дефолтные значения для вместимости
     @PostMapping("/lobbies/add")
     public String addLobby(@RequestParam String eventName, @RequestParam String brieflyInfo,
                            @RequestParam String date, @RequestParam String category,
