@@ -47,7 +47,7 @@ public class Lobby {
     @Column(name = "chat_link")
     private String chatLink;
     @Column(name = "is_actual")
-    private boolean isActual;
+    private boolean actual;
     @Column(name = "is_full")
     private boolean isFull;
 
