@@ -5,5 +5,6 @@ import ru.itis.new_project.models.forms.LobbyForm;
 import java.time.LocalDate;
 
 public interface LobbyService {
-    void createLobby(LobbyForm lobbyForm);
+   void createLobby(LobbyForm lobbyForm);
+   void checkLobbyDate();
 }
