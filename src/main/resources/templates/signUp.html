@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up!</title>
+</head>
+<body>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="form-style-2">
+    <h2 th:text="${error}"></h2>
+    <div class="form-style-2-heading">
+        Please SignUp!
+    </div>
+    <form method="post" action="/sign_up">
+        <label for="email">Email
+            <input class="input-field" type="text" id="email" name="email">
+        </label>
+        <br>
+        <label for="password">Password
+            <input class="input-field" type="password" id="password" name="password">
+        </label>
+        <br>
+        <label for="name">Name
+            <input class="input-field" type="text" id="name" name="name">
+        </label>
+        <br>
+        <label for="surname">Surname
+            <input class="input-field" type="text" id="surname" name="surname">
+        </label>
+        <br>
+        <label for="about">About
+            <input class="input-field" type="text" id="about" name="about">
+        </label>
+        <br>
+        <label for="remember-me">
+            <input type="checkbox" id="remember-me" name="remember-me">Запомнить меня</label>
+        <input type="submit" value="Login">
+    </form>
+</div>
+</body>
+</html>
+</body>
+</html>

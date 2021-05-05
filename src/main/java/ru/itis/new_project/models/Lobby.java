@@ -4,10 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.itis.new_project.models.enums.Categories;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -44,7 +49,7 @@ public class Lobby {
     @Column(name = "chat_link")
     private String chatLink;
     @Column(name = "is_actual")
-    private boolean isActual;
+    private boolean actual;
     @Column(name = "is_full")
     private boolean isFull;
 
@@ -54,6 +59,4 @@ public class Lobby {
         String[] split = this.eventDate.toString().split("-");
         return split[2]+"."+split[1]+"."+split[0];
     }
-
-
 }

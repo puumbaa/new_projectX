@@ -16,11 +16,11 @@ public class PersonLobby {
 
     @Id
     @Column(name = "person_id")
-    private Integer personId;
+    private Long personId;
 
     @Id
     @Column(name = "lobby_id")
-    private Integer lobbyId;
+    private Long lobbyId;
 
     @Column(name = "is_admin")
     private boolean is_admin;
@@ -32,9 +32,9 @@ public class PersonLobby {
     public static class PersonLobbyKey implements Serializable {
         @Getter
         @Setter
-        private Integer personId;
+        private Long personId;
         @Getter
         @Setter
-        private Integer lobbyId;
+        private Long lobbyId;
     }
 }
