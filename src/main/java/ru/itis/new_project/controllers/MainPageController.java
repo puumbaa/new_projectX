@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.new_project.models.Lobby;
 import ru.itis.new_project.models.enums.Categories;
+import ru.itis.new_project.models.forms.LobbyForm;
 import ru.itis.new_project.repositories.LobbyRepository;
 import ru.itis.new_project.services.LobbyService;
+import ru.itis.new_project.services.LobbyServiceImpl;
 import ru.itis.new_project.services.facades.IAuthenticationFacade;
 
 import java.time.LocalDate;
@@ -22,6 +24,9 @@ import java.util.*;
 
 @Controller
 public class MainPageController {
+
+    @Autowired
+    private LobbyService lobbyService;
 
     @Autowired
     private IAuthenticationFacade authFacade;
@@ -46,8 +51,8 @@ public class MainPageController {
 
         List<Categories> categories = Arrays.asList(sport, boardGame, development, leisure, party, social);
         // HARDCODE НО ЕГО ЛУЧШЕ НЕ УБИРАТЬ
-        LocalDate beginDate = dateStart.equals("") ? LocalDate.parse("2021-01-01") : LobbyService.getDate(dateStart);
-        LocalDate endDate = dateEnd.equals("") ? LocalDate.parse("2030-01-01") : LobbyService.getDate(dateEnd);
+        LocalDate beginDate = dateStart.equals("") ? LocalDate.parse("2021-01-01") : LobbyServiceImpl.getDate(dateStart);
+        LocalDate endDate = dateEnd.equals("") ? LocalDate.parse("2030-01-01") : LobbyServiceImpl.getDate(dateEnd);
 
         List<Lobby> lobbyList = new ArrayList<>();
 
@@ -93,24 +98,10 @@ public class MainPageController {
 
 
     @PostMapping("/lobbies/add")
-    public String addLobby(@RequestParam String eventName, @RequestParam String brieflyInfo,
-                           @RequestParam String date, @RequestParam String category,
-                           @RequestParam Integer capacity, @RequestParam String aboutEvent,
-                           @RequestParam String chatLink) {
+    public String addLobby(LobbyForm lobbyForm) {
 
+        lobbyService.createLobby(lobbyForm);
 
-        lobbyRepository.save(Lobby.builder()
-                .eventName(eventName)
-                .brieflyInfo(brieflyInfo)
-                .eventDate(LocalDate.parse(date))
-                .eventCategory(Categories.valueOf(category))
-                .countOfMembers(1)
-                .capacity(capacity)
-                .aboutEvent(aboutEvent)
-                .chatLink(chatLink)
-                .actual(true)
-                .isFull(false)
-                .build());
         return "redirect:/lobbies";
     }
 }

@@ -1,11 +1,9 @@
 package ru.itis.new_project.services;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import ru.itis.new_project.models.forms.LobbyForm;
 
-public class LobbyService {
-    public static LocalDate getDate(String date) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return LocalDate.parse(date, dateTimeFormatter);
-    }
+import java.time.LocalDate;
+
+public interface LobbyService {
+    void createLobby(LobbyForm lobbyForm);
 }
