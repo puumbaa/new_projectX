@@ -28,8 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/myLobbies/**", "/profile").authenticated()
                     .antMatchers("/sign_up/**", "/soon", "/lobbies").permitAll()
-                    .antMatchers("/static/**").permitAll()
-                    .antMatchers("/templates/**").permitAll()
                 .and()
                     .formLogin()
                         .usernameParameter("login")
