@@ -1,6 +1,8 @@
 package ru.itis.new_project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +15,8 @@ import ru.itis.new_project.repositories.LobbyRepository;
 import ru.itis.new_project.services.LobbyService;
 
 import java.time.LocalDate;
-import java.util.*;
 
+import java.util.*;
 
 @Controller
 public class MainPageController {
@@ -24,7 +26,6 @@ public class MainPageController {
 
     @GetMapping("/lobbies/sort")
     public String getSortedLobbies(
-            //TODO ВЕРНУТЬ ДАТА СТАРТ
             @RequestParam(value = "date-start", required = false) String dateStart,
             @RequestParam(value = "date-end", required = false) String dateEnd,
             @RequestParam(value = "capacity-start", required = false, defaultValue = "0") Integer capStart,
@@ -35,7 +36,8 @@ public class MainPageController {
             @RequestParam(value = "leisure", required = false) Categories leisure,
             @RequestParam(value = "party", required = false) Categories party,
             @RequestParam(value = "social", required = false) Categories social,
-            Model model) {
+            Model model, Authentication auth) {
+        System.out.println(auth.getName());
         List<Categories> categories = Arrays.asList(sport, boardGame, development, leisure, party, social);
         // HARDCODE НО ЕГО ЛУЧШЕ НЕ УБИРАТЬ
         LocalDate beginDate = dateStart.equals("") ? LocalDate.parse("2021-01-01") : LobbyService.getDate(dateStart);
@@ -43,16 +45,16 @@ public class MainPageController {
 
         List<Lobby> lobbyList = new ArrayList<>();
 
-        for (Categories cat: categories) {
-            if(cat!=null){
-                lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndEventCategory(
+        for (Categories cat : categories) {
+            if (cat != null) {
+                lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrue(
                         capStart, capEnd, beginDate, endDate, cat
                 ));
             }
         }
 
         if(lobbyList.isEmpty()){
-            lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetween(
+            lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrue(
                     capStart, capEnd, beginDate, endDate));
         }
         model.addAttribute("lobbies", lobbyList);
@@ -62,7 +64,7 @@ public class MainPageController {
 
     @GetMapping("/lobbies")
     public String greeting(Model model) {
-        model.addAttribute("lobbies", lobbyRepository.findAll());
+        model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
         return "index";
     }
 
@@ -85,6 +87,7 @@ public class MainPageController {
                            @RequestParam Integer capacity, @RequestParam String aboutEvent,
                            @RequestParam String chatLink) {
 
+
         lobbyRepository.save(Lobby.builder()
                 .eventName(eventName)
                 .brieflyInfo(brieflyInfo)
@@ -94,9 +97,10 @@ public class MainPageController {
                 .capacity(capacity)
                 .aboutEvent(aboutEvent)
                 .chatLink(chatLink)
-                .isActual(true)
+                .actual(true)
                 .isFull(false)
                 .build());
+
         return "redirect:/lobbies";
     }
 }
