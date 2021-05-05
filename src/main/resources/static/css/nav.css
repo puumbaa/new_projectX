@@ -3,6 +3,11 @@ body {
 }
 
 
+.lk-logout-container{
+    display: flex;
+    justify-content: space-between;
+    width: 18vw;
+}
 .btn-text {
     font-size: 18px;
     margin: 0;
@@ -61,3 +66,4 @@ body {
 .modal{
     top: 15vh;
 }
+
