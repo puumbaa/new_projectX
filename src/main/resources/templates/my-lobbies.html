@@ -24,8 +24,7 @@
     </script>
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/nav.css">
-    <link rel="stylesheet" href="../static/css/index.css">
-    <link rel="stylesheet" href="../static/css/nav.css">
+    <link rel="stylesheet" href="/css/my-lobbies.css">
 
     <title>Мои лобби</title>
 </head>
@@ -34,19 +33,19 @@
 <header th:insert="blocks/my-lobbies-nav.html :: my-lobbies-nav"></header>
 
 <div class="container-fluid">
+
     <div class="tab">
         <button class="tablinks" onclick="openCity(Event, 'All')">Все лобби</button>
         <button class="tablinks" onclick="openCity(Event, 'Control')">Управление</button>
     </div>
 
+    <!-- Tab content -->
     <div id="All" class="tabcontent">
-      <!--      Контент-->
         <h3>Все лобби</h3>
     </div>
 
     <div id="Control" class="tabcontent">
-        <!--      Контент-->
-        <h3>Суун</h3>
+        <h3>Soon</h3>
     </div>
 
 </div>

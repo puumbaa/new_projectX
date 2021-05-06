@@ -1,7 +1,25 @@
 .tab {
     overflow: hidden;
-    border: 1px solid #F6F7F8;
-    background-color: #F6F7F8;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 5vh;
+    border: 1px solid #212529;
+    border-radius: 14px;
+    background-color: #EFEFEF;
+}
+
+.tabcontent-active{
+    display: flex;
+}
+
+.tab button:last-child {
+    border-left: 1px solid #000;
+    border-radius: 0 14px 14px 0;
+}
+
+.tab button:first-child {
+    border-right: 1px solid #000;
+    border-radius: 14px 0 0 14px;
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -13,6 +31,9 @@
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.4s;
+    min-width: 50%;
+    border: 0;
+    min-height: 6vh;
 }
 
 /* Change background color of buttons on hover */
@@ -21,9 +42,11 @@
 }
 
 /* Create an active/current tablink class */
+
 .tab button.active {
     background-color: #F6F7F8;
 }
+
 
 /* Style the tab content */
 .tabcontent {

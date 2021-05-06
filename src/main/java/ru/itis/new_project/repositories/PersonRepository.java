@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Long> {
+
     //TODO как-то решить 500 проблему
     @Query(nativeQuery = true, value = "Update person set about=? where id=?")
     @ResponseStatus(HttpStatus.OK)
