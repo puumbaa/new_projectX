@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="stylesheet" href="../static/css/nav.css">
+
+    <title>Мои лобби</title>
+</head>
+<body>
+
+<header th:insert="blocks/my-lobbies-nav.html :: my-lobbies-nav"></header>
+
+<div class="container-fluid">
+    <div class="tab">
+        <button class="tablinks" onclick="openCity(Event, 'All')">Все лобби</button>
+        <button class="tablinks" onclick="openCity(Event, 'Control')">Управление</button>
+    </div>
+
+    <div id="All" class="tabcontent">
+      <!--      Контент-->
+        <h3>Все лобби</h3>
+    </div>
+
+    <div id="Control" class="tabcontent">
+        <!--      Контент-->
+        <h3>Суун</h3>
+    </div>
+
+</div>
+
+
+<script>
+    function openCity(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+<script src="/examples/vendors/jquery/jquery-3.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/examples/libs/bootstrap-3/js/bootstrap.min.js"></script>
+<!-- Moment JS -->
+<script src="/examples/vendors/moment/moment-with-locales.js"></script>
+<!-- Bootstrap DateTimePicker JS -->
+<script src="/examples/vendors/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<!-- Инициализация Bootstrap DateTimePicker -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+</body>
+</html>

@@ -53,12 +53,14 @@
 
             <div class="modal-footer">
 
-                <!-- TODO сделать постер на присоединение юзера к лобби-->
+                <!-- TODO сделать постер на присоединение юзера к лобби -->
 
-                    <button type="button" class="btn btn-primary">Enter</button>
+                <form method="post" id="modal-enter">
+                    <button type="submit" class="btn btn-primary">Enter</button>
+                </form>
 
 
-                <form method="GET" class="modal-go-to">
+                <form method="GET" id="modal-go-to-lobby-page">
                     <button type="submit" class="btn btn-secondary">Go to lobby page</button>
                 </form>
             </div>
@@ -179,10 +181,16 @@
         var info = $(event.relatedTarget).data('info')
         var id = $(event.relatedTarget).data('id')
         var modal = $(this)
-        var a = document.querySelector("form");
-        a.setAttribute("action", "/lobbies/" + id);
+        var a = document.querySelector("#modal-enter");
+        var b = document.querySelector("#modal-go-to-lobby-page");
+
+
+        a.setAttribute("action", "/lobbies/enter/" + id);
         modal.find('.modal-title').text(title)
         modal.find('.modal-info').text(info)
+
+        b.setAttribute("action", "/lobbies/"+id)
+
     })
 </script>
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>
