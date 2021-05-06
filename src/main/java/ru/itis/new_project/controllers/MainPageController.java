@@ -25,10 +25,9 @@ import java.util.*;
 
 
 @Controller
+@RequestMapping("/lobbies")
 public class MainPageController {
 
-    @Autowired
-    private PersonLobbyRepository plRepo;
     @Autowired
     private MainPageService mainPageService;
     @Autowired
@@ -45,7 +44,7 @@ public class MainPageController {
         return "redirect:/lobbies";
     }
 
-    @GetMapping("/lobbies/sort")
+    @GetMapping("/sort")
     public String getSortedLobbies(
             @RequestParam(value = "date-start", required = false) String dateStart,
             @RequestParam(value = "date-end", required = false) String dateEnd,
@@ -86,35 +85,15 @@ public class MainPageController {
     }
 
 
-    @GetMapping("/lobbies")
+    @GetMapping
     public String greeting(Model model) {
         model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
         Authentication auth = authFacade.getAuthentication();
         return mainPageService.isAuthenticated(auth) ? "index-auth" : "index";
     }
 
-
-    @GetMapping("/lobbies/{id}")
-    public String showLobbyPage(@PathVariable(value = "id") Long id, Model model) {
-        Authentication auth = authFacade.getAuthentication();
-        if (!mainPageService.isAuthenticated(auth)) return "redirect:/login";
-
-        Optional<Person> person = personRepository.findPersonByEmail(auth.getName());
-        Optional<Lobby> lobby = lobbyRepository.findById(id);
-
-        if (!(person.isPresent() && lobby.isPresent())) return "redirect:/lobbies";
-
-        if (plRepo.findPersonLobbyKeyByLobbyIdAndAndPersonId(id, person.get().getId()).isEmpty())
-            return "redirect:/lobbies";
-
-        model.addAttribute("lobby", lobby.get());
-        return "lobby-page";
-
-    }
-
     //TODO Мб перенести в лобби сервис?
-    //TODO Запилить проверку на то есть ли этот человек в лобби или нет
-    @PostMapping("/lobbies/enter/{id}")
+    @PostMapping("/enter/{id}")
     public String enterLobby(@PathVariable("id") Long id) {
 
         Authentication auth = authFacade.getAuthentication();
@@ -126,13 +105,15 @@ public class MainPageController {
         if (!(lobby.isPresent() && person.isPresent())) return "redirect:/lobbies";
         if (lobby.get().isFull()) return "redirect:/lobbies";
 
-        lobbyService.enterToLobby(id, person.get());
+        // Если человек уже в лобби, то перекидывает на страницу лобби
+        if(lobbyService.isInLobby(id, person.get().getId())) return ("redirect:/lobbies/"+id);
 
+        lobbyService.enterToLobby(id, person.get());
         return "redirect:/lobbies";
     }
 
 
-    @PostMapping("/lobbies/add")
+    @PostMapping("/add")
     public String addLobby(LobbyForm lobbyForm) {
         Authentication auth = authFacade.getAuthentication();
         Person person = ((PersonDetailsImpl) auth.getPrincipal()).getPerson();

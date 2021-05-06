@@ -46,7 +46,7 @@
 
         <div class="lobby-buttons">
 
-            <form action="/lobbies/leave" method="POST">
+            <form th:action="@{/lobbies/{id}/leave(id=${lobby.getId()})}" method="POST">
                 <button type="submit" class="btn">Выйти</button>
             </form>
 

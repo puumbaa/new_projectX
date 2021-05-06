@@ -8,6 +8,7 @@ import ru.itis.new_project.models.Person;
 import ru.itis.new_project.models.enums.Categories;
 import ru.itis.new_project.models.forms.LobbyForm;
 import ru.itis.new_project.repositories.LobbyRepository;
+import ru.itis.new_project.repositories.PersonLobbyRepository;
 import ru.itis.new_project.repositories.PersonRepository;
 
 import java.time.LocalDate;
@@ -19,6 +20,8 @@ import java.util.Set;
 @Service
 public class LobbyServiceImpl implements LobbyService{
 
+    @Autowired
+    private PersonLobbyRepository plRepo;
     @Autowired
     private LobbyRepository lobbyRepository;
     @Autowired
@@ -75,5 +78,21 @@ public class LobbyServiceImpl implements LobbyService{
         if(lobby.getCountOfMembers().equals(lobby.getCapacity())) lobby.setFull(true);
 
         lobbyRepository.save(lobby);
+    }
+
+    @Override
+    public boolean isInLobby(Long lobbyId, Long personId) {
+        return plRepo.findPersonLobbyByLobbyIdAndPersonId(lobbyId, personId).isPresent();
+    }
+
+    @Override
+    @Scheduled(cron = "0 0 0 * * *")
+    public void checkLobbiesDate(){
+        List<Lobby> allByActualTrue = lobbyRepository.findAllByActualTrue();
+        for (Lobby lobby: allByActualTrue){
+            if (lobby.getEventDate().compareTo(LocalDate.now())<0){
+                lobbyRepository.updateActualTrueById(lobby.getId());
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 // Возможно решить проблему с exlude'ом
 @SpringBootApplication(exclude = UserDetailsServiceAutoConfiguration.class)
 @EnableJpaRepositories(basePackages = "ru.itis.new_project.repositories")
+@EnableScheduling
 @EntityScan(basePackages = "ru.itis.new_project.models")
 @EnableScheduling
 public class NewProjectApplication{
