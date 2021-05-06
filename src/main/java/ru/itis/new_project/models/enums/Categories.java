@@ -9,9 +9,6 @@ public enum Categories {
     SOCIAL("Социальное"),
     OTHER("Другое");
 
-    public String getTitle() {
-        return title;
-    }
 
     private String title;
 

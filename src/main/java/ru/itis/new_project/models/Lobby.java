@@ -1,9 +1,7 @@
 package ru.itis.new_project.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.itis.new_project.models.enums.Categories;
@@ -22,14 +20,21 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "personSet")
 
 public class Lobby {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "lobbySet")
-    private Set<Person> personSet = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "person_lobby",
+            joinColumns = @JoinColumn(name = "lobby_id"),
+            inverseJoinColumns = @JoinColumn(name = "person_id")
+    )
+    private Set<Person> personSet;
 
     @Column(name = "event_name")
     private String eventName;
@@ -48,10 +53,17 @@ public class Lobby {
     private String aboutEvent;
     @Column(name = "chat_link")
     private String chatLink;
+    @Column(name = "admin_id")
+    private Long adminId;
     @Column(name = "is_actual")
     private boolean actual;
     @Column(name = "is_full")
     private boolean isFull;
+
+    @Override
+    public String toString(){
+        return "Lobby: " + id;
+    }
 
 
 
@@ -59,4 +71,5 @@ public class Lobby {
         String[] split = this.eventDate.toString().split("-");
         return split[2]+"."+split[1]+"."+split[0];
     }
+
 }

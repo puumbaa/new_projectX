@@ -38,7 +38,7 @@ public class SignUpServiceImpl implements SignUpService{
         if(personForm.getName().length()<2 || personForm.getName().length()>60){
             return false;
         }
-        if(!personForm.getEmail().matches("[a-zA-Z0-9]*@.[a-zA-Z]*")){
+        if(!personForm.getEmail().matches("[a-zA-Z0-9]*@.[a-zA-Z]*[.].[a-zA-Z]*")){
            return false;
         }
         if(personForm.getPassword().length()<8) return false;

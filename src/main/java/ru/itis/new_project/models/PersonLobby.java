@@ -1,6 +1,7 @@
 package ru.itis.new_project.models;
 
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,9 +22,6 @@ public class PersonLobby {
     @Id
     @Column(name = "lobby_id")
     private Long lobbyId;
-
-    @Column(name = "is_admin")
-    private boolean is_admin;
 
     @AllArgsConstructor
     @NoArgsConstructor
