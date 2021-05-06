@@ -11,6 +11,7 @@ import ru.itis.new_project.models.Person;
 import ru.itis.new_project.models.enums.Categories;
 import ru.itis.new_project.models.forms.LobbyForm;
 import ru.itis.new_project.repositories.LobbyRepository;
+import ru.itis.new_project.repositories.PersonLobbyRepository;
 import ru.itis.new_project.repositories.PersonRepository;
 import ru.itis.new_project.security.details.PersonDetailsImpl;
 import ru.itis.new_project.services.LobbyService;
@@ -27,6 +28,8 @@ import java.util.*;
 public class MainPageController {
 
     @Autowired
+    private PersonLobbyRepository plRepo;
+    @Autowired
     private MainPageService mainPageService;
     @Autowired
     private PersonRepository personRepository;
@@ -38,7 +41,7 @@ public class MainPageController {
     LobbyRepository lobbyRepository;
 
     @GetMapping("/")
-    public String getPages(){
+    public String getPages() {
         return "redirect:/lobbies";
     }
 
@@ -72,7 +75,7 @@ public class MainPageController {
             }
         }
 
-        if(lobbyList.isEmpty()){
+        if (lobbyList.isEmpty()) {
             lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrue(
                     capStart, capEnd, beginDate, endDate));
         }
@@ -94,39 +97,45 @@ public class MainPageController {
     @GetMapping("/lobbies/{id}")
     public String showLobbyPage(@PathVariable(value = "id") Long id, Model model) {
         Authentication auth = authFacade.getAuthentication();
-        if(!mainPageService.isAuthenticated(auth)) return "login";
+        if (!mainPageService.isAuthenticated(auth)) return "redirect:/login";
 
+        Optional<Person> person = personRepository.findPersonByEmail(auth.getName());
         Optional<Lobby> lobby = lobbyRepository.findById(id);
-        if (lobby.isPresent()) {
-            model.addAttribute("lobby", lobby.get());
-            return "lobby-page";
-        }
-        return "redirect:/lobbies";
+
+        if (!(person.isPresent() && lobby.isPresent())) return "redirect:/lobbies";
+
+        if (plRepo.findPersonLobbyKeyByLobbyIdAndAndPersonId(id, person.get().getId()).isEmpty())
+            return "redirect:/lobbies";
+
+        model.addAttribute("lobby", lobby.get());
+        return "lobby-page";
+
     }
 
     //TODO Мб перенести в лобби сервис?
+    //TODO Запилить проверку на то есть ли этот человек в лобби или нет
     @PostMapping("/lobbies/enter/{id}")
-    public String enterLobby(@PathVariable("id") Long id){
+    public String enterLobby(@PathVariable("id") Long id) {
 
         Authentication auth = authFacade.getAuthentication();
-        if(!mainPageService.isAuthenticated(auth)) return "redirect:index";
+        if (!mainPageService.isAuthenticated(auth)) return "redirect:/login";
 
         Optional<Lobby> lobby = lobbyRepository.findById(id);
         Optional<Person> person = personRepository.findPersonByEmail(auth.getName());
 
-        if(!(lobby.isPresent() && person.isPresent())) return "redirect:/lobbies";
-        if(lobby.get().isFull()) return "redirect:/lobbies";
+        if (!(lobby.isPresent() && person.isPresent())) return "redirect:/lobbies";
+        if (lobby.get().isFull()) return "redirect:/lobbies";
 
         lobbyService.enterToLobby(id, person.get());
 
-        return "/index-auth";
+        return "redirect:/lobbies";
     }
 
 
     @PostMapping("/lobbies/add")
     public String addLobby(LobbyForm lobbyForm) {
         Authentication auth = authFacade.getAuthentication();
-        Person person = ((PersonDetailsImpl)auth.getPrincipal()).getPerson();
+        Person person = ((PersonDetailsImpl) auth.getPrincipal()).getPerson();
 
         lobbyService.createLobby(lobbyForm, person);
         return "redirect:/lobbies";
