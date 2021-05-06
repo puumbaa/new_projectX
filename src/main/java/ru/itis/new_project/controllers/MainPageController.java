@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.itis.new_project.models.Lobby;
 import ru.itis.new_project.models.Person;
 import ru.itis.new_project.models.enums.Categories;
@@ -39,6 +36,11 @@ public class MainPageController {
     private IAuthenticationFacade authFacade;
     @Autowired
     LobbyRepository lobbyRepository;
+
+    @GetMapping("/")
+    public String getPages(){
+        return "redirect:/lobbies";
+    }
 
     @GetMapping("/lobbies/sort")
     public String getSortedLobbies(
@@ -105,18 +107,19 @@ public class MainPageController {
     //TODO Мб перенести в лобби сервис?
     @PostMapping("/lobbies/enter/{id}")
     public String enterLobby(@PathVariable("id") Long id){
+
         Authentication auth = authFacade.getAuthentication();
-        if(!mainPageService.isAuthenticated(auth)) return "redirect:/lobbies";
+        if(!mainPageService.isAuthenticated(auth)) return "redirect:index";
 
         Optional<Lobby> lobby = lobbyRepository.findById(id);
         Optional<Person> person = personRepository.findPersonByEmail(auth.getName());
 
-        // Че делать когда лобби заполнено? Возвращать страницу с ошибкой или нет?
         if(!(lobby.isPresent() && person.isPresent())) return "redirect:/lobbies";
         if(lobby.get().isFull()) return "redirect:/lobbies";
+
         lobbyService.enterToLobby(id, person.get());
 
-        return "index";
+        return "/index-auth";
     }
 
 

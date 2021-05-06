@@ -40,6 +40,7 @@ public class LobbyServiceImpl implements LobbyService{
                 .aboutEvent(lobbyForm.getAboutEvent())
                 .chatLink(lobbyForm.getChatLink())
                 .personSet(new HashSet<>())
+                .adminId(person.getId())
                 .actual(true)
                 .isFull(false)
                 .build();
@@ -52,6 +53,13 @@ public class LobbyServiceImpl implements LobbyService{
 
     @Override
     public void enterToLobby(Long lobbyId, Person person) {
+        Lobby lobby = lobbyRepository.findById(lobbyId).get();
+        person = personRepository.findById(person.getId()).get();
 
+        lobby.getPersonSet().add(person);
+        lobby.setCountOfMembers(lobby.getCountOfMembers() + 1);
+        if(lobby.getCountOfMembers().equals(lobby.getCapacity())) lobby.setFull(true);
+
+        lobbyRepository.save(lobby);
     }
 }

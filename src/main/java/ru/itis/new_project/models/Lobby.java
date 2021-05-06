@@ -20,6 +20,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "personSet")
 
 public class Lobby {
     @Id

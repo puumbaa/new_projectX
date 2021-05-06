@@ -18,7 +18,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
+@EqualsAndHashCode(exclude = "lobbySet")
 
 public class Person {
 
