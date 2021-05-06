@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface PersonLobbyRepository extends JpaRepository<PersonLobby, PersonLobby.PersonLobbyKey> {
-    Optional<PersonLobby> findPersonLobbyKeyByLobbyIdAndAndPersonId(Long lobbyId, Long PersonId);
+    Optional<PersonLobby> findPersonLobbyByLobbyIdAndPersonId(Long lobbyId, Long personId);
 }
