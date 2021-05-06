@@ -22,9 +22,6 @@ public class PersonLobby {
     @Column(name = "lobby_id")
     private Long lobbyId;
 
-    @Column(name = "is_admin")
-    private boolean is_admin;
-
     @AllArgsConstructor
     @NoArgsConstructor
     @EqualsAndHashCode

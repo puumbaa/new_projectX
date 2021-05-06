@@ -1,10 +1,8 @@
 package ru.itis.new_project.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import ru.itis.new_project.models.enums.Role;
 
 import javax.persistence.*;
@@ -20,19 +18,16 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
+
 public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Lobby.class)
-    @JoinTable(
-            name = "person_lobby",
-            joinColumns = @JoinColumn(name = "person_id"),
-            inverseJoinColumns = @JoinColumn(name = "lobby_id")
-    )
+    @JsonIgnore
+    @ManyToMany(mappedBy = "personSet")
     private Set<Lobby> lobbySet = new HashSet<>();
 
 
@@ -60,5 +55,10 @@ public class Person {
     private Role role;
     @Column(name = "contacts")
     private String contacts;
+
+    @Override
+    public String toString(){
+        return "Person: " + id;
+    }
 
 }

@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.new_project.models.Lobby;
+import ru.itis.new_project.models.Person;
 import ru.itis.new_project.models.enums.Categories;
 import ru.itis.new_project.models.forms.LobbyForm;
 import ru.itis.new_project.repositories.LobbyRepository;
+import ru.itis.new_project.repositories.PersonRepository;
+import ru.itis.new_project.security.details.PersonDetailsImpl;
 import ru.itis.new_project.services.LobbyService;
 import ru.itis.new_project.services.LobbyServiceImpl;
+import ru.itis.new_project.services.MainPageService;
 import ru.itis.new_project.services.facades.IAuthenticationFacade;
 
 import java.time.LocalDate;
@@ -26,11 +30,13 @@ import java.util.*;
 public class MainPageController {
 
     @Autowired
+    private MainPageService mainPageService;
+    @Autowired
+    private PersonRepository personRepository;
+    @Autowired
     private LobbyService lobbyService;
-
     @Autowired
     private IAuthenticationFacade authFacade;
-
     @Autowired
     LobbyRepository lobbyRepository;
 
@@ -71,7 +77,7 @@ public class MainPageController {
         model.addAttribute("lobbies", lobbyList);
         System.out.println(auth.isAuthenticated());
         System.out.println(auth.getName());
-        return !auth.getName().equals("anonymousUser") ? "index-auth" : "index";
+        return mainPageService.isAuthenticated(auth) ? "index-auth" : "index";
     }
 
 
@@ -79,14 +85,14 @@ public class MainPageController {
     public String greeting(Model model) {
         model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
         Authentication auth = authFacade.getAuthentication();
-        return !auth.getName().equals("anonymousUser") ? "index-auth" : "index";
+        return mainPageService.isAuthenticated(auth) ? "index-auth" : "index";
     }
 
 
     @GetMapping("/lobbies/{id}")
     public String showLobbyPage(@PathVariable(value = "id") Long id, Model model) {
         Authentication auth = authFacade.getAuthentication();
-        if(auth.getName().equals("anonymousUser")) return "login";
+        if(!mainPageService.isAuthenticated(auth)) return "login";
 
         Optional<Lobby> lobby = lobbyRepository.findById(id);
         if (lobby.isPresent()) {
@@ -96,12 +102,30 @@ public class MainPageController {
         return "redirect:/lobbies";
     }
 
+    //TODO Мб перенести в лобби сервис?
+    @PostMapping("/lobbies/enter/{id}")
+    public String enterLobby(@PathVariable("id") Long id){
+        Authentication auth = authFacade.getAuthentication();
+        if(!mainPageService.isAuthenticated(auth)) return "redirect:/lobbies";
+
+        Optional<Lobby> lobby = lobbyRepository.findById(id);
+        Optional<Person> person = personRepository.findPersonByEmail(auth.getName());
+
+        // Че делать когда лобби заполнено? Возвращать страницу с ошибкой или нет?
+        if(!(lobby.isPresent() && person.isPresent())) return "redirect:/lobbies";
+        if(lobby.get().isFull()) return "redirect:/lobbies";
+        lobbyService.enterToLobby(id, person.get());
+
+        return "index";
+    }
+
 
     @PostMapping("/lobbies/add")
     public String addLobby(LobbyForm lobbyForm) {
+        Authentication auth = authFacade.getAuthentication();
+        Person person = ((PersonDetailsImpl)auth.getPrincipal()).getPerson();
 
-        lobbyService.createLobby(lobbyForm);
-
+        lobbyService.createLobby(lobbyForm, person);
         return "redirect:/lobbies";
     }
 }
