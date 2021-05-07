@@ -11,7 +11,6 @@ import ru.itis.new_project.models.Person;
 import ru.itis.new_project.models.enums.Categories;
 import ru.itis.new_project.models.forms.LobbyForm;
 import ru.itis.new_project.repositories.LobbyRepository;
-import ru.itis.new_project.repositories.PersonLobbyRepository;
 import ru.itis.new_project.repositories.PersonRepository;
 import ru.itis.new_project.security.details.PersonDetailsImpl;
 import ru.itis.new_project.services.LobbyService;
@@ -68,14 +67,14 @@ public class MainPageController {
 
         for (Categories cat : categories) {
             if (cat != null) {
-                lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrue(
+                lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrueAndFullFalse(
                         capStart, capEnd, beginDate, endDate, cat
                 ));
             }
         }
 
         if (lobbyList.isEmpty()) {
-            lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrue(
+            lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrueAndFullFalse(
                     capStart, capEnd, beginDate, endDate));
         }
         model.addAttribute("lobbies", lobbyList);

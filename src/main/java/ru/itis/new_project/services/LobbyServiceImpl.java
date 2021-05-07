@@ -83,4 +83,44 @@ public class LobbyServiceImpl implements LobbyService{
             }
         }
     }
+
+    @Override
+    public void updateLobbyInfo(LobbyForm lobbyForm, Long lobbyId) {
+
+        Lobby lobby = lobbyRepository.findById(lobbyId).get();
+
+        lobby.setEventName(lobbyForm.getEventName());
+        lobby.setBrieflyInfo(lobby.getBrieflyInfo());
+        lobby.setEventDate(LocalDate.parse(lobbyForm.getDate()));
+        lobby.setCapacity(lobbyForm.getCapacity());
+        lobby.setAboutEvent(lobbyForm.getAboutEvent());
+        lobby.setChatLink(lobbyForm.getChatLink());
+
+        lobbyRepository.save(lobby);
+    }
+
+    @Override
+    public void deleteUser(Long lobbyId, Long personId) {
+        Lobby lobby = lobbyRepository.findById(lobbyId).get();
+        Person person = personRepository.findById(personId).get();
+
+        if(lobby.getCountOfMembers().equals(lobby.getCapacity())){
+            lobby.setFull(true);
+        }
+        lobby.setCountOfMembers(lobby.getCountOfMembers() - 1);
+
+        lobby.getPersonSet().remove(person);
+        lobbyRepository.save(lobby);
+    }
+
+    @Override
+    public void deleteLobby(Long lobbyId) {
+        Lobby lobby = lobbyRepository.findById(lobbyId).get();
+
+        lobby.getPersonSet().clear();
+        lobby.setActual(false);
+        lobby.setCountOfMembers(0);
+
+        lobbyRepository.save(lobby);
+    }
 }

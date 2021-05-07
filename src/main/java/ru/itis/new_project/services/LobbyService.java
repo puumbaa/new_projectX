@@ -10,4 +10,11 @@ public interface LobbyService {
     void enterToLobby(Long lobbyId, Person person);
     boolean isInLobby(Long lobbyId, Long personId);
     void checkLobbiesDate();
+
+    void updateLobbyInfo(LobbyForm lobbyForm, Long lobbyId);
+
+    void deleteUser(Long lobbyId, Long personId);
+
+    void deleteLobby(Long lobbyId);
 }
+

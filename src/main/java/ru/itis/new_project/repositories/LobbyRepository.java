@@ -16,12 +16,12 @@ import java.util.List;
 
 @Repository
 public interface LobbyRepository extends JpaRepository<Lobby,Long> {
-    List<Lobby> findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrue(Integer capacity, Integer capacity2,
-                                                                            LocalDate eventDate, LocalDate eventDate2,
-                                                                            Categories eventCategory
+    List<Lobby> findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrueAndFullFalse(Integer capacity, Integer capacity2,
+                                                                                                     LocalDate eventDate, LocalDate eventDate2,
+                                                                                                     Categories eventCategory
     );
-    List<Lobby> findAllByCapacityBetweenAndEventDateBetweenAndActualTrue(Integer capacity, Integer capacity2,
-                                                            LocalDate eventDate, LocalDate eventDate2);
+    List<Lobby> findAllByCapacityBetweenAndEventDateBetweenAndActualTrueAndFullFalse(Integer capacity, Integer capacity2,
+                                                                                     LocalDate eventDate, LocalDate eventDate2);
 
     List<Lobby> findAllByActualTrue();
 
@@ -30,4 +30,10 @@ public interface LobbyRepository extends JpaRepository<Lobby,Long> {
     @Query(nativeQuery = true, value = "UPDATE lobby SET is_actual = false WHERE id = ?")
     @ResponseStatus(HttpStatus.OK)
     void updateActualTrueById(Long id);
+
+    List<Lobby> findAllByAdminId(Long adminId);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM lobby l INNER JOIN person_lobby pl " +
+            "ON l.id = pl.lobby_id WHERE (pl.person_id = ? and l.is_actual = true)")
+    List<Lobby> findAllByInLobby(Long personId);
 }

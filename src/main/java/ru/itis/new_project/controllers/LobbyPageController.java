@@ -39,19 +39,25 @@ public class LobbyPageController {
         Optional<Lobby> lobby = lobbyRepository.findById(id);
 
         if (!(person.isPresent() && lobby.isPresent())) return "redirect:/lobbies";
-        System.out.println(lobbyService.isInLobby(id, person.get().getId()));
         if(!lobbyService.isInLobby(id, person.get().getId())) return "redirect:/lobbies";
 
+
         model.addAttribute("lobby", lobby.get());
-        return "lobby-page";
+        return lobby.get().getAdminId().equals(person.get().getId()) ? "redirect:/lobbies/"+id+"/admin" : "lobby-page";
     }
 
 
-    //TODO Доделать выход из лобби
+
     @PostMapping("/lobbies/{id}/leave")
     public String showLobbyPage(@PathVariable(value = "id") Long id){
         Authentication auth = authFacade.getAuthentication();
 
+        Person person = personRepository.findPersonByEmail(auth.getName()).get();
+        if(lobbyRepository.findById(id).get().getAdminId().equals(person.getId())) return "redirect:/lobbies/"+id;
+        lobbyService.deleteUser(id, person.getId());
+
         return "redirect:/lobbies";
     }
+
+
 }
