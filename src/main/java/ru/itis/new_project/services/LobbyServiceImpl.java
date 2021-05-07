@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class LobbyServiceImpl implements LobbyService{
+public class LobbyServiceImpl implements LobbyService {
 
     @Autowired
     private PersonLobbyRepository plRepo;
@@ -34,10 +34,10 @@ public class LobbyServiceImpl implements LobbyService{
 
     @Override
     @Scheduled(cron = "0 0 0 * * *")
-    public void checkLobbyDate(){
+    public void checkLobbiesDate() {
         List<Lobby> allByActualTrue = lobbyRepository.findAllByActualTrue();
-        for (Lobby lobby: allByActualTrue){
-            if (lobby.getEventDate().compareTo(LocalDate.now())<0){
+        for (Lobby lobby : allByActualTrue) {
+            if (lobby.getEventDate().compareTo(LocalDate.now()) < 0) {
                 lobbyRepository.updateActualTrueById(lobby.getId());
             }
         }
@@ -75,7 +75,7 @@ public class LobbyServiceImpl implements LobbyService{
 
         lobby.getPersonSet().add(person);
         lobby.setCountOfMembers(lobby.getCountOfMembers() + 1);
-        if(lobby.getCountOfMembers().equals(lobby.getCapacity())) lobby.setFull(true);
+        if (lobby.getCountOfMembers().equals(lobby.getCapacity())) lobby.setFull(true);
 
         lobbyRepository.save(lobby);
     }
@@ -85,14 +85,4 @@ public class LobbyServiceImpl implements LobbyService{
         return plRepo.findPersonLobbyByLobbyIdAndPersonId(lobbyId, personId).isPresent();
     }
 
-    @Override
-    @Scheduled(cron = "0 0 0 * * *")
-    public void checkLobbiesDate(){
-        List<Lobby> allByActualTrue = lobbyRepository.findAllByActualTrue();
-        for (Lobby lobby: allByActualTrue){
-            if (lobby.getEventDate().compareTo(LocalDate.now())<0){
-                lobbyRepository.updateActualTrueById(lobby.getId());
-            }
-        }
-    }
 }

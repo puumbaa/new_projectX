@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableJpaRepositories(basePackages = "ru.itis.new_project.repositories")
 @EnableScheduling
 @EntityScan(basePackages = "ru.itis.new_project.models")
-@EnableScheduling
 public class NewProjectApplication{
 
 	// Не очень понял почему именно тут, но Сидиков поставил его сюда
