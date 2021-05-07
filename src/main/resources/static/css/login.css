@@ -28,7 +28,7 @@ label {
     height: 31vh;
     color: #212529;
 }
-label:last-child {
+.remember-me-label {
 
     flex-direction: row;
     align-items: center;
