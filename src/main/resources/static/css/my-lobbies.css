@@ -1,44 +1,28 @@
 .tab {
     overflow: hidden;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     margin-top: 5vh;
-    border: 1px solid #212529;
-    border-radius: 14px;
-    background-color: #EFEFEF;
+
 }
 
-.tabcontent-active{
-    display: flex;
-}
-
-.tab button:last-child {
-    border-left: 1px solid #000;
-    border-radius: 0 14px 14px 0;
-}
-
-.tab button:first-child {
-    border-right: 1px solid #000;
-    border-radius: 14px 0 0 14px;
-}
 
 /* Style the buttons that are used to open the tab content */
-.tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
+.tab button{
+    display: flex;
     cursor: pointer;
-    padding: 14px 16px;
     transition: 0.4s;
-    min-width: 50%;
-    border: 0;
-    min-height: 6vh;
+    min-width: 36vw;
+    border: 1px solid #212529;
+    min-height: 7vh;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px
 }
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-    background-color: #F6F7F8;
+    background-color: #fff;
 }
 
 /* Create an active/current tablink class */
@@ -48,10 +32,29 @@
 }
 
 
+
+
+
 /* Style the tab content */
 .tabcontent {
-    display: none;
+    display: flex;
     padding: 6px 12px;
-    border: 1px solid #F6F7F8;
-    border-top: none;
+
+}
+
+#All,#Control{
+    max-width: 90vw;
+    min-width: 90vw;
+}
+
+.tabcontent-secondary{
+    display: none;
+}
+
+
+/*Убирает рамку у кнопок при нажатии*/
+button,
+button:active,
+button:focus {
+    outline: none;
 }
