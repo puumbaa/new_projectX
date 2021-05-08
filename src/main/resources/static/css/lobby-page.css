@@ -45,7 +45,12 @@
     justify-content: space-between;
     padding-top: 8vh;
 }
-
+.lobby-data div {
+    background-color: #fff;
+    padding: 0.45rem;
+    border: 1px solid #212529;
+    border-radius: 17px;
+}
 .lobby-data p, span{
     color: #212529;
     font-size: 18px;

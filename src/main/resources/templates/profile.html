@@ -39,8 +39,10 @@
             <a th:href="'https://'+ ${person.getContacts()}" class="my-contact" target="_blank">Контактная ссылка</a>
         </div>
 
-        <button class="btn btn-dark change-person-data" value="Click" onmousedown="viewEditForm()">
-            Изменить персональные данные
+
+        <button class="btn btn-secondary change-person-data" id="btn-come-back" value="Click" onmousedown="closeEditForm()">Отменить
+        </button>
+        <button class="btn btn-secondary change-person-data" id="btn-edit" value="Click" onmousedown="viewEditForm()">Редактировать
         </button>
     </div>
 
@@ -66,15 +68,25 @@
 
         <input type="hidden" value="" th:attr="value=${person.getId()}" name="personId">
 
-        <button type="submit" class="btn btn-dark">Сохранить</button>
+        <button type="submit" class="btn btn-success">Сохранить данные</button>
     </form>
 </div>
 
 
 <script>
+
     function viewEditForm() {
         document.getElementById('edit-form').style.display = "flex";
+        document.getElementById('btn-edit').style.display = "none"
+        document.getElementById('btn-come-back').style.display = "inline-block"
     }
+
+    function closeEditForm() {
+        document.getElementById('edit-form').style.display = "none";
+        document.getElementById('btn-edit').style.display = "inline-block"
+        document.getElementById('btn-come-back').style.display = "none"
+    }
+
 </script>
 
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>

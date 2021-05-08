@@ -55,7 +55,7 @@
 
 
                 <form method="POST">
-                    <input type="hidden"  name="personId">
+                    <input type="hidden" name="personId">
                     <button type="submit" class="btn btn-danger">
                         Подтвердить
                     </button>
@@ -66,12 +66,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
 
 
 <div class="modal fade" id="lobbyDeleteModal" tabindex="-1" role="dialog" aria-labelledby="lobbyDeleteModalLabel"
@@ -112,10 +106,65 @@
 
 <div class="lobby-container">
 
-
     <div class="lobby-about-container">
 
-        <h2 th:text="${lobby.eventName}" class="lobby-name"></h2>
+        <div class="lobby-admin-title">
+            <h2 th:text="${lobby.eventName}" class="lobby-name"></h2>
+            <button class="btn btn-secondary" id="btn-come-back" value="Click" onmousedown="closeEditForm()">Отменить
+            </button>
+            <button class="btn btn-secondary" id="btn-edit" value="Click" onmousedown="viewEditForm()">Редактировать
+            </button>
+        </div>
+
+
+        <form th:action="@{/lobbies/{id}/admin/editinfo(id=${lobby.getId()})}" id="edit-form" method="POST">
+
+            <div class="edit-labels-general">
+
+                <div class="edit-labels-container">
+                    <label for="eventName" class="edit-label">Название мероприятия
+                        <input type="text" name="eventName" id="eventName" value=""
+                               th:attr="value=${lobby.getEventName()}">
+                    </label>
+
+
+                    <label for="brieflyInfo" class="edit-label">Краткое описание
+                        <input type="text" name="brieflyInfo" id="brieflyInfo" value=""
+                               th:attr="value=${lobby.getBrieflyInfo()}">
+                    </label>
+
+
+                    <label for="eventDate" class="edit-label">Дата
+                        <input type="date" value="" th:attr="value=${lobby.getEventDate()}" id="eventDate"
+                               name="eventDate">
+                    </label>
+                </div>
+
+                <div class="edit-labels-container">
+                    <label for="capacity" class="edit-label">Количество участников
+                        <input type="number" value="" th:attr="value=${lobby.getCapacity()}" id="capacity"
+                               name="capacity">
+                    </label>
+
+
+                    <label for="aboutEvent" class="edit-label">Полное описание
+                        <textarea th:text="${lobby.getAboutEvent()}" id="aboutEvent"
+                                  name="aboutEvent" cols="50" rows="6">
+                        </textarea>
+                    </label>
+
+
+                    <label for="chatLink" class="edit-label">Ссылка на беседу
+                        <input type="text" value="" th:attr="value=${lobby.getChatLink()}" id="chatLink"
+                               name="chatLink">
+                    </label>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-success">Сохранить данные</button>
+
+        </form>
 
         <div class="about-info">
             <p th:text="${lobby.aboutEvent}"></p>
@@ -138,7 +187,6 @@
                 Удалить лобби
             </button>
 
-
         </div>
 
 
@@ -159,10 +207,9 @@
         </div>
 
 
-        <h2 class="lobby-name">Участники лобби</h2>
+        <h2 class="lobby-name members-title">Участники лобби</h2>
 
         <div class="members-container">
-
 
 
             <div th:each="member:${participants}" class="member-item">
@@ -172,13 +219,12 @@
 
 
                 <button type="button" class="delete btn-danger btn" data-toggle="modal" data-target="#memberDeleteModal"
-                        data-member-id=""  data-lobby-id=""
+                        data-member-id="" data-lobby-id=""
                         th:attr="data-member-id=${member.getId()},data-lobby-id=${lobby.getId()}">
                     <span aria-hidden="true">&times;</span>
                 </button>
 
             </div>
-
 
 
         </div>
@@ -209,7 +255,24 @@
 
     })
 
+
+
+    function viewEditForm() {
+        document.getElementById('edit-form').style.display = "flex";
+        document.getElementById('btn-edit').style.display = "none"
+        document.getElementById('btn-come-back').style.display = "inline-block"
+    }
+
+    function closeEditForm() {
+        document.getElementById('edit-form').style.display = "none";
+        document.getElementById('btn-edit').style.display = "inline-block"
+        document.getElementById('btn-come-back').style.display = "none"
+    }
+
 </script>
+
+
+
 
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>
 <!-- Bootstrap JS -->

@@ -20,11 +20,23 @@ background: #DC3545;
     align-items: center;
 }
 
-/*
-.member-item:first-child .delete{
-    display: none;
+.lobby-admin-title{
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
 }
-*/
+
+.members-title{
+    margin-top: 10vh;
+}
+button#btn-edit,
+button#btn-come-back{
+    margin-right: 5vw;
+    margin-left: 3vw;
+    margin-bottom: .3vh;
+    min-width: 8.75vw;
+}
+
 
 .members-container {
     display: flex;
@@ -41,4 +53,42 @@ background: #DC3545;
 }
 .delete span{
     color: #fff;
+}
+
+
+
+button#btn-come-back{
+    display: none;
+}
+
+#edit-form{
+    display: none;
+    margin-bottom: 8vh;
+}
+.edit-label{
+    display: flex;
+    flex-direction: column;
+}
+
+#edit-form {
+    flex-direction: column;
+    background-color: #212529;
+    color: #f1f6f8;
+    border-radius: 13px;
+    padding: 4vh 0;
+
+}
+.edit-labels-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.edit-labels-general{
+    display: flex;
+    justify-content: space-evenly;
+}
+button.btn.btn-success {
+    min-width: 15vw;
+    max-width: 15vw;
+    margin: 4vh auto 0;
 }
