@@ -15,7 +15,7 @@ import ru.itis.new_project.repositories.PersonRepository;
 import ru.itis.new_project.security.details.PersonDetailsImpl;
 import ru.itis.new_project.services.LobbyService;
 import ru.itis.new_project.services.LobbyServiceImpl;
-import ru.itis.new_project.services.MainPageService;
+import ru.itis.new_project.services.PersonService;
 import ru.itis.new_project.services.facades.IAuthenticationFacade;
 
 import java.time.LocalDate;
@@ -28,7 +28,7 @@ import java.util.*;
 public class MainPageController {
 
     @Autowired
-    private MainPageService mainPageService;
+    private PersonService personService;
     @Autowired
     private PersonRepository personRepository;
     @Autowired
@@ -37,11 +37,6 @@ public class MainPageController {
     private IAuthenticationFacade authFacade;
     @Autowired
     LobbyRepository lobbyRepository;
-
-    @GetMapping("/")
-    public String getPages() {
-        return "redirect:/lobbies";
-    }
 
     @GetMapping("/sort")
     public String getSortedLobbies(
@@ -80,7 +75,7 @@ public class MainPageController {
         model.addAttribute("lobbies", lobbyList);
         System.out.println(auth.isAuthenticated());
         System.out.println(auth.getName());
-        return mainPageService.isAuthenticated(auth) ? "index-auth" : "index";
+        return personService.isAuthenticated(auth) ? "index-auth" : "index";
     }
 
 
@@ -88,7 +83,8 @@ public class MainPageController {
     public String greeting(Model model) {
         model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
         Authentication auth = authFacade.getAuthentication();
-        return mainPageService.isAuthenticated(auth) ? "index-auth" : "index";
+
+        return personService.isAuthenticated(auth) ? "index-auth" : "index";
     }
 
     //TODO Мб перенести в лобби сервис?
@@ -96,7 +92,7 @@ public class MainPageController {
     public String enterLobby(@PathVariable("id") Long id) {
 
         Authentication auth = authFacade.getAuthentication();
-        if (!mainPageService.isAuthenticated(auth)) return "redirect:/login";
+        if (!personService.isAuthenticated(auth)) return "redirect:/login";
 
         Optional<Lobby> lobby = lobbyRepository.findById(id);
         Optional<Person> person = personRepository.findPersonByEmail(auth.getName());

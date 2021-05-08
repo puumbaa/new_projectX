@@ -23,47 +23,59 @@
             crossorigin="anonymous">
     </script>
 
-    <link rel="stylesheet" href="/css/login.css">
-    <title>Вход</title>
-
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <title>Личный кабинет</title>
 </head>
 <body>
 
+<header th:insert="blocks/nav.html :: nav"></header>
+<div class="profile-container">
 
-<div th:if="${error}">
-    <p>НЕВЕРНЫЕ ДАННЫЕ</p>
-</div>
-
-<div class="form-style-2">
-
-    <div class="form-container">
-
-        <div class="form-style-2-heading">
-            Please Login!
+    <div class="profile-general-content">
+        <div class="full-name-and-my-contact">
+            <h3 class="full-name" th:text="${person.getName()} + ' ' + ${person.getSurname()}"></h3>
+            <a th:href="${person.getContacts()}" class="my-contact" target="_blank">Контактная ссылка</a>
         </div>
 
-        <form method="post" action="/login">
-            <div class="label-container">
-
-                <label for="login">Логин
-                    <input class="input-field" type="text" id="login" name="login">
-                </label>
-                <label for="password">Пароль
-                    <input class="input-field" type="password" id="password" name="password">
-                </label>
-                <label for="remember-me" class="remember-me-label">
-                    <input type="checkbox" id="remember-me" name="remember-me">Запомнить меня
-                </label>
-            </div>
-
-            <a href="/sign_up" class="link-dark">Зарегистрироваться</a>
-            <input type="submit" value="Login" class="login">
-
-        </form>
+        <button class="btn btn-dark change-person-data" value="Click" onmousedown="viewEditForm()">
+            Изменить персональные данные
+        </button>
     </div>
 
+    <form action="/profile/edit" id="edit-form" method="POST">
+        <div class="profile-label-elem">
+            <label for="newContactLink">Введите новую ссылку
+                <input type="text" id="newContactLink" name="newContactLink" value=""
+                       th:attr="value=${person.getContacts()}">
+            </label>
+        </div>
+
+        <div class="profile-label-elem">
+            <label for="oldPass">Введите старый пароль
+                <input type="password" id="oldPass" name="oldPass">
+            </label>
+        </div>
+
+        <div class="profile-label-elem">
+            <label for="newPass">Введите новый пароль
+                <input type="password" id="newPass" name="newPass">
+            </label>
+        </div>
+
+        <input type="hidden" value="" th:attr="value=${person.getId()}" name="personId">
+
+        <button type="submit" class="btn btn-dark">Сохранить</button>
+    </form>
 </div>
 
+
+<script>
+    function viewEditForm() {
+        document.getElementById('edit-form').style.display = "flex";
+    }
+</script>
 
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>
 <!-- Bootstrap JS -->

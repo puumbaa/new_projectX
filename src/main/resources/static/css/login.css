@@ -39,19 +39,27 @@ label {
 }
 .login{
     min-width: 100%;
+    margin-top: 1.5vh;
+    height: 3vw;
+}
+.link-dark{
+
+    text-align: center;
 }
 
 .form-container {
     background-color: #F6F7F8;
     min-width: 19vw;
-    padding: 3vh 3vw;
+    padding: 3vh 3vw 0vw 3vw;
     border-radius: 25px;
+    max-height: 52vh;
+    min-height: 52vh;
 
 }
 input{
     border: 1px solid #212529;
     border-radius: 5px;
-    padding: 0 5px;
+    padding: 0 7px;
 }
 input,
 input:active,

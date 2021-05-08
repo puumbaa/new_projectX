@@ -8,5 +8,5 @@ public class PersonForm {
     private String surname;
     private String email;
     private String password;
-    private String about;
+    private String contacts;
 }

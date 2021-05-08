@@ -12,7 +12,7 @@ import ru.itis.new_project.models.Person;
 import ru.itis.new_project.repositories.LobbyRepository;
 import ru.itis.new_project.repositories.PersonRepository;
 import ru.itis.new_project.services.LobbyService;
-import ru.itis.new_project.services.MainPageService;
+import ru.itis.new_project.services.PersonService;
 import ru.itis.new_project.services.facades.IAuthenticationFacade;
 
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class LobbyPageController {
     @Autowired
     private IAuthenticationFacade authFacade;
     @Autowired
-    private MainPageService mainPageService;
+    private PersonService personService;
     @Autowired
     private PersonRepository personRepository;
     @Autowired
@@ -33,7 +33,7 @@ public class LobbyPageController {
     @GetMapping("/lobbies/{id}")
     public String showLobbyPage(@PathVariable(value = "id") Long id, Model model) {
         Authentication auth = authFacade.getAuthentication();
-        if (!mainPageService.isAuthenticated(auth)) return "redirect:/login";
+        if (!personService.isAuthenticated(auth)) return "redirect:/login";
 
         Optional<Person> person = personRepository.findPersonByEmail(auth.getName());
         Optional<Lobby> lobby = lobbyRepository.findById(id);

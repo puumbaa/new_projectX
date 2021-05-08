@@ -28,8 +28,10 @@ form#sign-up-form{
     min-width: 91%;
     max-width: 91%;
 }
-.remember-me-label-add,
 .sign-up{
     margin-left: 1.5vw;
+    margin-top: .5vw;
+    min-height: 3vw;
+    max-height: 3vw;
 }
 
