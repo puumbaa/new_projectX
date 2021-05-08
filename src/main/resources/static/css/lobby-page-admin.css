@@ -1,0 +1,44 @@
+div#lobbyDeleteModal,
+div#memberDeleteModal{
+    top: 30vh;
+}
+
+
+
+button.btn.btn-danger{
+background: #DC3545;
+}
+.member-item{
+    background-color: #212529;
+    border-radius: 11px;
+    margin-right: 3vw;
+    margin-bottom: 3vh;
+    padding-left: 1vw;
+    min-width: 12vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*
+.member-item:first-child .delete{
+    display: none;
+}
+*/
+
+.members-container {
+    display: flex;
+    margin-top: 8vh;
+    flex-wrap: wrap;
+}
+
+.member-item a{
+    color: #f6f7f8;
+    text-decoration: none;
+}
+.delete{
+    border-radius: 0 11px 11px 0;
+}
+.delete span{
+    color: #fff;
+}

@@ -36,7 +36,7 @@
     <div class="profile-general-content">
         <div class="full-name-and-my-contact">
             <h3 class="full-name" th:text="${person.getName()} + ' ' + ${person.getSurname()}"></h3>
-            <a th:href="${person.getContacts()}" class="my-contact" target="_blank">Контактная ссылка</a>
+            <a th:href="'https://'+ ${person.getContacts()}" class="my-contact" target="_blank">Контактная ссылка</a>
         </div>
 
         <button class="btn btn-dark change-person-data" value="Click" onmousedown="viewEditForm()">

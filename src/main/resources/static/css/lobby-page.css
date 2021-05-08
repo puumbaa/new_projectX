@@ -13,7 +13,7 @@
 .lobby-container {
     display: flex;
     flex-direction: column;
-    margin-top: 10vh;
+    margin-top: 5vh;
     align-items: center
 }
 
