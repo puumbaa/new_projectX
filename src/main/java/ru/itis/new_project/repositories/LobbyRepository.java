@@ -16,12 +16,12 @@ import java.util.List;
 
 @Repository
 public interface LobbyRepository extends JpaRepository<Lobby,Long> {
-    List<Lobby> findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrueAndFullFalse(Integer capacity, Integer capacity2,
-                                                                                                     LocalDate eventDate, LocalDate eventDate2,
-                                                                                                     Categories eventCategory
+    List<Lobby> findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrueAndIsFullFalse(Integer capacity, Integer capacity2,
+                                                                                                       LocalDate eventDate, LocalDate eventDate2,
+                                                                                                       Categories eventCategory
     );
-    List<Lobby> findAllByCapacityBetweenAndEventDateBetweenAndActualTrueAndFullFalse(Integer capacity, Integer capacity2,
-                                                                                     LocalDate eventDate, LocalDate eventDate2);
+    List<Lobby> findAllByCapacityBetweenAndEventDateBetweenAndActualTrueAndIsFullFalse(Integer capacity, Integer capacity2,
+                                                                                       LocalDate eventDate, LocalDate eventDate2);
 
     List<Lobby> findAllByActualTrue();
 

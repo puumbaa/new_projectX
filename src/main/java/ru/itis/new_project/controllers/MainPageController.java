@@ -67,14 +67,14 @@ public class MainPageController {
 
         for (Categories cat : categories) {
             if (cat != null) {
-                lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrueAndFullFalse(
+                lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrueAndIsFullFalse(
                         capStart, capEnd, beginDate, endDate, cat
                 ));
             }
         }
 
         if (lobbyList.isEmpty()) {
-            lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrueAndFullFalse(
+            lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrueAndIsFullFalse(
                     capStart, capEnd, beginDate, endDate));
         }
         model.addAttribute("lobbies", lobbyList);

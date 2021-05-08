@@ -58,6 +58,4 @@ public class LobbyPageController {
 
         return "redirect:/lobbies";
     }
-
-
 }
