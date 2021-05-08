@@ -16,13 +16,13 @@ public class PersonalPageController {
     @Autowired
     PersonRepository personRepository;
 
-    @GetMapping("/my_page")
+    @GetMapping("/profile")
     public String goPersonalPage(Model model, Authentication authentication){
         if(authentication == null){
             return "redirect:/login";
         }
         PersonDetailsImpl principal = (PersonDetailsImpl) authentication.getPrincipal();
-        model.addAttribute(PersonDto.from(principal.getPerson()));
-        return "myPage";
+        model.addAttribute("person",PersonDto.from(principal.getPerson()));
+        return "profile";
     }
 }
