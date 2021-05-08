@@ -20,13 +20,13 @@ public class SignUpServiceImpl implements SignUpService{
     @Override
     public void signUp(PersonForm personForm) {
         String hashPass = passwordEncoder.encode(personForm.getPassword());
-
+        personForm.setContacts(personForm.getContacts().replaceAll("https://", ""));
         Person person = Person.builder()
                 .name(personForm.getName())
                 .surname(personForm.getSurname())
                 .password(hashPass)
                 .contacts(personForm.getContacts())
-                .email(personForm.getEmail())
+                .email(personForm.getEmail().toLowerCase())
                 .role(Role.USER)
                 .build();
 
@@ -34,14 +34,7 @@ public class SignUpServiceImpl implements SignUpService{
     }
 
     @Override
-    public boolean validateSuccess(PersonForm personForm) {
-        if(personForm.getName().length()<2 || personForm.getName().length()>60){
-            return false;
-        }
-        if(!personForm.getEmail().matches("[a-zA-Z0-9]*@.[a-zA-Z]*[.].[a-zA-Z]*")){
-           return false;
-        }
-        if(personForm.getPassword().length()<8) return false;
-        return true;
+    public boolean validateEmail(String email) {
+        return personRepository.findPersonByEmail(email.toLowerCase()).isEmpty();
     }
 }

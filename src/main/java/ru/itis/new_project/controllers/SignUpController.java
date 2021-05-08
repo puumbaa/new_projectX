@@ -21,8 +21,8 @@ public class SignUpController {
 
     @PostMapping("/sign_up")
     public String signUp(Model model, PersonForm personForm){
-        model.addAttribute("error", "Wrong data");
-        if(!signUpService.validateSuccess(personForm)) return "signUp";
+        if(!signUpService.validateEmail(personForm.getEmail())) return "signUp";
+
         signUpService.signUp(personForm);
         return "redirect:/login";
     }

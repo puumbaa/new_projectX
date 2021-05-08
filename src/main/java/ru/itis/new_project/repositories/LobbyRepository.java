@@ -31,7 +31,7 @@ public interface LobbyRepository extends JpaRepository<Lobby,Long> {
     @ResponseStatus(HttpStatus.OK)
     void updateActualTrueById(Long id);
 
-    List<Lobby> findAllByAdminId(Long adminId);
+    List<Lobby> findAllByAdminIdAndActualTrue(Long adminId);
 
     @Query(nativeQuery = true, value = "SELECT * FROM lobby l INNER JOIN person_lobby pl " +
             "ON l.id = pl.lobby_id WHERE (pl.person_id = ? and l.is_actual = true)")
