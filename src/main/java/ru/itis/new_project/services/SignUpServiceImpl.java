@@ -25,8 +25,8 @@ public class SignUpServiceImpl implements SignUpService{
                 .name(personForm.getName())
                 .surname(personForm.getSurname())
                 .password(hashPass)
+                .contacts(personForm.getContacts())
                 .email(personForm.getEmail())
-                .about(personForm.getAbout())
                 .role(Role.USER)
                 .build();
 

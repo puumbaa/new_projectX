@@ -39,9 +39,6 @@ public class Person {
     @NotBlank
     @Size(min = 2, max = 50)
     private String surname;
-    @Column(name = "about")
-    @NotBlank
-    private String about;
     @Column(name = "email")
     @Email
     @NotBlank

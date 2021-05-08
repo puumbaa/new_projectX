@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class LobbyServiceImpl implements LobbyService {
+public class LobbyServiceImpl implements LobbyService{
 
     @Autowired
     private PersonLobbyRepository plRepo;
@@ -31,18 +31,6 @@ public class LobbyServiceImpl implements LobbyService {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(date, dateTimeFormatter);
     }
-
-    @Override
-    @Scheduled(cron = "0 0 0 * * *")
-    public void checkLobbiesDate() {
-        List<Lobby> allByActualTrue = lobbyRepository.findAllByActualTrue();
-        for (Lobby lobby : allByActualTrue) {
-            if (lobby.getEventDate().compareTo(LocalDate.now()) < 0) {
-                lobbyRepository.updateActualTrueById(lobby.getId());
-            }
-        }
-    }
-
 
     @Override
     public void createLobby(LobbyForm lobbyForm, Person person) {
@@ -75,7 +63,7 @@ public class LobbyServiceImpl implements LobbyService {
 
         lobby.getPersonSet().add(person);
         lobby.setCountOfMembers(lobby.getCountOfMembers() + 1);
-        if (lobby.getCountOfMembers().equals(lobby.getCapacity())) lobby.setFull(true);
+        if(lobby.getCountOfMembers().equals(lobby.getCapacity())) lobby.setFull(true);
 
         lobbyRepository.save(lobby);
     }
@@ -85,4 +73,54 @@ public class LobbyServiceImpl implements LobbyService {
         return plRepo.findPersonLobbyByLobbyIdAndPersonId(lobbyId, personId).isPresent();
     }
 
+    @Override
+    @Scheduled(cron = "0 0 0 * * *")
+    public void checkLobbiesDate(){
+        List<Lobby> allByActualTrue = lobbyRepository.findAllByActualTrue();
+        for (Lobby lobby: allByActualTrue){
+            if (lobby.getEventDate().compareTo(LocalDate.now())<0){
+                lobbyRepository.updateActualTrueById(lobby.getId());
+            }
+        }
+    }
+
+    @Override
+    public void updateLobbyInfo(LobbyForm lobbyForm, Long lobbyId) {
+
+        Lobby lobby = lobbyRepository.findById(lobbyId).get();
+
+        lobby.setEventName(lobbyForm.getEventName());
+        lobby.setBrieflyInfo(lobby.getBrieflyInfo());
+        lobby.setEventDate(LocalDate.parse(lobbyForm.getDate()));
+        lobby.setCapacity(lobbyForm.getCapacity());
+        lobby.setAboutEvent(lobbyForm.getAboutEvent());
+        lobby.setChatLink(lobbyForm.getChatLink());
+
+        lobbyRepository.save(lobby);
+    }
+
+    @Override
+    public void deleteUser(Long lobbyId, Long personId) {
+        Lobby lobby = lobbyRepository.findById(lobbyId).get();
+        Person person = personRepository.findById(personId).get();
+
+        if(lobby.getCountOfMembers().equals(lobby.getCapacity())){
+            lobby.setFull(true);
+        }
+        lobby.setCountOfMembers(lobby.getCountOfMembers() - 1);
+
+        lobby.getPersonSet().remove(person);
+        lobbyRepository.save(lobby);
+    }
+
+    @Override
+    public void deleteLobby(Long lobbyId) {
+        Lobby lobby = lobbyRepository.findById(lobbyId).get();
+
+        lobby.getPersonSet().clear();
+        lobby.setActual(false);
+        lobby.setCountOfMembers(0);
+
+        lobbyRepository.save(lobby);
+    }
 }
