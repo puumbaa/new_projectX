@@ -75,7 +75,8 @@ public class MainPageController {
 
         if(lobbyList.isEmpty()) {
             model.addAttribute("notFound", true);
-            return "redirect:/lobbies";
+            model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
+            return personService.isAuthenticated(auth) ? "index-auth" : "index";
         }
         model.addAttribute("lobbies", lobbyList);
         System.out.println(auth.isAuthenticated());
