@@ -116,10 +116,9 @@ public class MainPageController {
     @PostMapping("/add")
     public String addLobby(LobbyForm lobbyForm, Model model) {
         Authentication auth = authFacade.getAuthentication();
-
         lobbyForm.setChatLink(lobbyForm.getChatLink().replace("https://", ""));
-        if(personService.isContactLinkValid(lobbyForm.getChatLink())){
-            model.addAttribute("chatLinkErr", true);
+
+        if(!lobbyService.isLobbyValid(lobbyForm.getChatLink(), lobbyForm.getEventName(), model)){
             return "index-auth";
         }
 
