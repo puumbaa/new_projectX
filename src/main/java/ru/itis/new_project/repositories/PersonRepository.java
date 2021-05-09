@@ -18,4 +18,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM person p INNER JOIN person_lobby pl on p.id = pl.person_id WHERE " +
             "(pl.lobby_id = ? and pl.person_id != ?)")
     List<Person> findAllInLobby(Long lobbyId, Long personId);
+
+    Optional<Person> findPersonByEmailIgnoreCase(String email);
 }

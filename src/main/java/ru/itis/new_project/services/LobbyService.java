@@ -9,6 +9,7 @@ public interface LobbyService {
     void createLobby(LobbyForm lobbyForm, Person person);
     void enterToLobby(Long lobbyId, Person person);
     boolean isInLobby(Long lobbyId, Long personId);
+
     void checkLobbiesDate();
 
     void updateLobbyInfo(LobbyForm lobbyForm, Long lobbyId);

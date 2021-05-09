@@ -17,7 +17,7 @@ public class PersonDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return new PersonDetailsImpl(
-                personRepository.findPersonByEmail(email)
+                personRepository.findPersonByEmailIgnoreCase(email)
                         .orElseThrow(IllegalArgumentException::new));
     }
 }
