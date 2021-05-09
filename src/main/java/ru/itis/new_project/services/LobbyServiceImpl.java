@@ -25,6 +25,8 @@ public class LobbyServiceImpl implements LobbyService{
     @Autowired
     private LobbyRepository lobbyRepository;
     @Autowired
+    private PersonService personService;
+    @Autowired
     private PersonRepository personRepository;
 
     public static LocalDate getDate(String date) {
@@ -33,7 +35,8 @@ public class LobbyServiceImpl implements LobbyService{
     }
 
     @Override
-    public void createLobby(LobbyForm lobbyForm, Person person) {
+    public void createLobby(LobbyForm lobbyForm, String email){
+        Person person = personRepository.findPersonByEmail(email).get();
 
         Lobby lobby = Lobby.builder()
                 .eventName(lobbyForm.getEventName())
@@ -50,7 +53,6 @@ public class LobbyServiceImpl implements LobbyService{
                 .isFull(false)
                 .build();
 
-        person = personRepository.findPersonByEmail(person.getEmail()).get();
         lobby.getPersonSet().add(person);
 
         lobbyRepository.save(lobby);
