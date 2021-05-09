@@ -10,9 +10,7 @@ import ru.itis.new_project.models.enums.Role;
 import ru.itis.new_project.models.forms.PersonForm;
 import ru.itis.new_project.repositories.PersonRepository;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 @Service
@@ -20,6 +18,8 @@ public class SignUpServiceImpl implements SignUpService {
 
     @Autowired
     private PersonRepository personRepository;
+    @Autowired
+    private PersonService personService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -40,38 +40,18 @@ public class SignUpServiceImpl implements SignUpService {
         personRepository.save(person);
     }
 
-    @Override
-    public boolean isEmailValid(String email) {
-        return personRepository.findPersonByEmailIgnoreCase(email).isEmpty();
-    }
 
-    @Override
-    public boolean isContactLinkValid(String contactLink) {
-        try {
-            URL url = new URL(contactLink);
-            HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-            huc.setRequestMethod("HEAD");
-            huc.setInstanceFollowRedirects(false);
-            String respMessage = huc.getResponseMessage();
-
-            return ((HttpStatus.OK.getReasonPhrase().equals(respMessage) ||
-                    (HttpStatus.FOUND.getReasonPhrase().equals(respMessage)) &&
-                            contactLink.contains("vk.com")));
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
     @Override
     public boolean isPersonValid(PersonForm personForm, Model model) {
         boolean res = true;
-        if (!isEmailValid(personForm.getEmail())) {
-            model.addAttribute("emailError", true);
+        if (!personService.isEmailValid(personForm.getEmail())) {
+            model.addAttribute("emailErr", true);
             res = false;
         }
-        if (!isContactLinkValid(personForm.getContacts())) {
+        if (!personService.isContactLinkValid(personForm.getContacts())) {
             res = false;
-            model.addAttribute("contactError", true);
+            model.addAttribute("contactErr", true);
         }
         return res;
     }

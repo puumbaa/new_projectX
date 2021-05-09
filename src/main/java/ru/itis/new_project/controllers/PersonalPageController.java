@@ -1,4 +1,5 @@
 package ru.itis.new_project.controllers;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,9 +23,9 @@ public class PersonalPageController {
 
 
     @GetMapping
-    public String goPersonalPage(Model model){
+    public String goPersonalPage(Model model) {
         Authentication auth = authFacade.getAuthentication();
-        if(!personService.isAuthenticated(auth)) return "redirect:/login";
+        if (!personService.isAuthenticated(auth)) return "redirect:/login";
 
         Person person = personRepository.findPersonByEmail(auth.getName()).get();
         model.addAttribute("person", person);
@@ -32,11 +33,8 @@ public class PersonalPageController {
     }
 
     @PostMapping("/edit")
-    public String editProfile(Long personId, String newContactLink, String oldPass, String newPass, Model model){
-        if (!personService.isEqualPasswords(personId, oldPass)) {
-            model.addAttribute("passError", true);
-            return "redirect:/profile";
-        }
+    public String editProfile(Long personId, String newContactLink, String oldPass, String newPass, Model model) {
+        if(!personService.isUpdatableDataValid(personId, oldPass, newContactLink, model)) return "profile";
 
         personService.updateInfo(personId, newContactLink, newPass);
 
