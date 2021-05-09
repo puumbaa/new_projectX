@@ -41,8 +41,9 @@ public class AdminLobbyPage {
     }
 
     @PostMapping("/editinfo")
-    public String editLobbyInfo(@PathVariable("id") Long lobbyId, LobbyForm lobbyForm){
-
+    public String editLobbyInfo(@PathVariable("id") Long lobbyId, LobbyForm lobbyForm, Model model){
+        lobbyForm.setChatLink(lobbyForm.getChatLink().replace("http://",""));
+        if(!lobbyService.isLobbyValid(lobbyForm.getChatLink(),lobbyForm.getEventName(), model))
         lobbyService.updateLobbyInfo(lobbyForm, lobbyId);
 
         return "redirect:/lobbies/"+lobbyId;
