@@ -40,17 +40,73 @@
     </div>
 
     <!-- Tab content -->
-    <div id="All" class="tabcontent">
-        <h3>Все лобби</h3>
+
+    <div id="All" class="tabcontent container-fluid lobbies" >
+        <div th:each="lobby:${lobbies}" class="lobby">
+            <h3 th:text="${lobby.getEventName()}"></h3>
+            <div class="btn-cont">
+
+                <form th:action="@{/lobbies/__${lobby.getId()}__}" method="GET">
+                    <button type="submit" class="btn btn-dark">
+                        На страницу лобби
+                    </button>
+                </form>
+
+
+            </div>
+            <div class="cnt-date">
+                <div>
+                    <p>Заполненость:</p>
+                    <span th:text="${lobby.countOfMembers}"></span>
+                    <span>/</span>
+                    <span th:text="${lobby.capacity}"></span>
+                </div>
+                <div>
+                    <p>Дата:</p>
+                    <span th:text="${lobby.getSimpleDate()}"></span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="Control" class="tabcontent">
-        <h3>Soon</h3>
+
+
+    <div id="Control" class="tabcontent container-fluid lobbies tabcontent-secondary">
+
+        <div th:each="lobby:${lobbiesControl}" class="lobby">
+            <h3 th:text="${lobby.getEventName()}"></h3>
+            <div class="btn-cont">
+
+
+                <form th:action="@{/lobbies/__${lobby.getId()}__}" method="GET">
+                    <button type="submit" class="btn btn-dark">
+                        На страницу лобби
+                    </button>
+                </form>
+
+
+            </div>
+            <div class="cnt-date">
+                <div>
+                    <p>Заполненость:</p>
+                    <span th:text="${lobby.countOfMembers}"></span>
+                    <span>/</span>
+                    <span th:text="${lobby.capacity}"></span>
+                </div>
+                <div>
+                    <p>Дата:</p>
+                    <span th:text="${lobby.getSimpleDate()}"></span>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
 
 
+
+
+<!--Скрипт для вкладок -->
 <script>
     function openCity(evt, cityName) {
         // Declare all variables
@@ -62,6 +118,7 @@
             tabcontent[i].style.display = "none";
         }
 
+
         // Get all elements with class="tablinks" and remove the class "active"
         tablinks = document.getElementsByClassName("tablinks");
         for (i = 0; i < tablinks.length; i++) {
@@ -69,7 +126,7 @@
         }
 
         // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(cityName).style.display = "block";
+        document.getElementById(cityName).style.display = "flex";
         evt.currentTarget.className += " active";
     }
 </script>

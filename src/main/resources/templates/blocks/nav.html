@@ -1,6 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 
+<body>
 
 <div th:fragment="nav">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -18,7 +19,8 @@
                     </li>
 
                     <li class="nav-item">
-                        <button type="button" class="btn nav-item btn-text" data-toggle="modal" data-target="#addLobbyModal">
+                        <button type="button" class="btn nav-item btn-text" data-toggle="modal"
+                                data-target="#addLobbyModal">
                             Добавить лобби
                         </button>
                     </li>
@@ -31,7 +33,7 @@
 
 
                 <div class="lk-logout-container">
-                    <a href="stud.html" class="nav-link lk"> Личный кабинет</a>
+                    <a href="/profile" class="nav-link lk"> Личный кабинет</a>
                     <a href="/logout" class="nav-link lk"> Выйти </a>
                 </div>
             </div>
@@ -55,15 +57,13 @@
                 </div>
 
 
-                <!-- todo доделать форму -->
-
                 <div class="modal-body">
                     <form action="/lobbies/add" method="POST">
 
                         <fieldset>
                             <div>
                                 <label for="eventName">Название мероприятия</label>
-                                <input type="text" name="eventName" id="eventName">
+                                <input type="text" name="eventName" id="eventName" required maxlength="60">
                             </div>
 
                             <div>
@@ -81,27 +81,27 @@
 
                             <div>
                                 <label for="brieflyInfo">Краткое описание</label>
-                                <input type="text" name="brieflyInfo" id="brieflyInfo">
+                                <input type="text" name="brieflyInfo" id="brieflyInfo" required maxlength="100">
                             </div>
 
                             <div>
                                 <label for="date">Дата и время</label>
-                                <input type="date" name="date" id="date">
+                                <input type="date" name="date" id="date" required>
                             </div>
 
                             <div>
-                                <label for="capacity">Количество людей</label>
-                                <input type="text" name="capacity" id="capacity">
+                                <label for="capacity">Количество участников</label>
+                                <input type="number" name="capacity" id="capacity" required min="2" max="60">
                             </div>
 
                             <div>
                                 <label for="aboutEvent">Полное описание</label>
-                                <textarea name="aboutEvent" id="aboutEvent" cols="50" rows="6"></textarea>
+                                <textarea name="aboutEvent" id="aboutEvent" cols="50" rows="6" required maxlength="60"></textarea>
                             </div>
 
                             <div>
                                 <label for="chatLink"> Ссылка на беседу </label>
-                                <input type="text" name="chatLink" id="chatLink">
+                                <input type="text" name="chatLink" id="chatLink" required>
                             </div>
 
 
@@ -117,7 +117,34 @@
             </div>
         </div>
     </div>
-
 </div>
 
+
+<!--<script>-->
+<!--    let today = new Date();-->
+<!--    let dd = today.getDate();-->
+<!--    let mm = today.getMonth() + 1; //January is 0-->
+<!--    let yyyy = today.getFullYear();-->
+<!--    if (dd < 10) {-->
+<!--        dd = '0' + dd-->
+<!--    }-->
+<!--    if (mm < 10) {-->
+<!--        mm = '0' + mm-->
+<!--    }-->
+<!--    today = yyyy + '-' + mm + '-' + dd;-->
+<!--    document.getElementById("date").setAttribute("min", today);-->
+
+
+<!--    mm = parseInt(mm) + 1;-->
+<!--    if (mm > 12) {-->
+<!--        yyyy = yyyy + 1;-->
+<!--        mm = '01';-->
+<!--    }-->
+<!--    let monthAfterToday = yyyy + '-' + mm + "-" + dd;-->
+<!--    document.getElementById("date").setAttribute("min", monthAfterToday);-->
+
+
+<!--</script>-->
+
+</body>
 </html>

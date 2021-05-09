@@ -1,0 +1,37 @@
+.label-elem{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+div#form-container-add{
+    min-width: 35vw;
+    max-width: 35vw;
+    min-height: 45vh;
+    max-height: 46vh;
+}
+.label-elem-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+form#sign-up-form{
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+}
+.remember-me-and-sign-up-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.contact-link,
+.sign-up{
+    min-width: 91%;
+    max-width: 91%;
+}
+.sign-up{
+    margin-left: 1.5vw;
+    margin-top: .5vw;
+    min-height: 3vw;
+    max-height: 3vw;
+}
+

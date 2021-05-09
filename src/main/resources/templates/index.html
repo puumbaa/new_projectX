@@ -32,6 +32,11 @@
 </head>
 <body>
 
+<!-----------------------------------  begin warning   ---------------------------------------------------->
+
+
+<!--------------------------------      end warning ---------------------------------------------------->
+
 <!-----------------------------------  begin Modal  ---------------------------------------------------->
 
 <div class="modal fade" id="lobbyModal" tabindex="-1" role="dialog" aria-labelledby="lobbyModalLabel"
@@ -53,10 +58,11 @@
 
             <div class="modal-footer">
 
-              
 
-
-                <button type="button" class="btn btn-primary">Enter</button>
+                <button type="button" class="btn btn-primary"
+                        onclick="alert('Для присоединения к лобби необходимо авторизоваться')"
+                        data-target="#lobbyWarningModal">Enter
+                </button>
 
 
                 <form method="GET" class="modal-go-to">
@@ -79,7 +85,7 @@
         <div>
             <div class="date-fields-container">
 
-                <label for="date-start">Дата:  </label>
+                <label for="date-start">Дата: </label>
 
                 <input type="date" name="date-start" id="date-start">
 
@@ -89,11 +95,11 @@
 
             <div>
 
-                <label for="capacity-start">Количество человек:  </label>
-                <input type="number" name="capacity-start" id="capacity-start">
+                <label for="capacity-start">Количество участников: </label>
+                <input type="number" name="capacity-start" id="capacity-start" value="1" min="1" max="60">
 
                 <label for="capacity-end"> - </label>
-                <input type="number" name="capacity-end" id="capacity-end">
+                <input type="number" name="capacity-end" id="capacity-end" value="60" min="1" max="60">
 
             </div>
         </div>
@@ -185,6 +191,7 @@
         modal.find('.modal-title').text(title)
         modal.find('.modal-info').text(info)
     })
+    $('.alert').alert()
 </script>
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>
 <!-- Bootstrap JS -->

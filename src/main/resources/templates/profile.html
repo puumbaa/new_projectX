@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <title>Личный кабинет</title>
+</head>
+<body>
+
+<header th:insert="blocks/nav.html :: nav"></header>
+<div class="profile-container">
+
+    <div class="profile-general-content">
+        <div class="full-name-and-my-contact">
+            <h3 class="full-name" th:text="${person.getName()} + ' ' + ${person.getSurname()}"></h3>
+            <a th:href="'https://'+ ${person.getContacts()}" class="my-contact" target="_blank">Контактная ссылка</a>
+        </div>
+
+
+        <button class="btn btn-secondary change-person-data" id="btn-come-back" value="Click" onmousedown="closeEditForm()">Отменить
+        </button>
+        <button class="btn btn-secondary change-person-data" id="btn-edit" value="Click" onmousedown="viewEditForm()">Редактировать
+        </button>
+    </div>
+
+    <form action="/profile/edit" id="edit-form" method="POST">
+        <div class="profile-label-elem">
+            <label for="newContactLink">Введите новую ссылку
+                <input type="text" id="newContactLink" name="newContactLink" value=""
+                       th:attr="value=${person.getContacts()}">
+            </label>
+        </div>
+
+        <div class="profile-label-elem">
+            <label for="oldPass">Введите старый пароль
+                <input type="password" id="oldPass" name="oldPass">
+            </label>
+        </div>
+
+        <div class="profile-label-elem">
+            <label for="newPass">Введите новый пароль
+                <input type="password" id="newPass" name="newPass">
+            </label>
+        </div>
+
+        <input type="hidden" value="" th:attr="value=${person.getId()}" name="personId">
+
+        <button type="submit" class="btn btn-success">Сохранить данные</button>
+    </form>
+</div>
+
+
+<script>
+
+    function viewEditForm() {
+        document.getElementById('edit-form').style.display = "flex";
+        document.getElementById('btn-edit').style.display = "none"
+        document.getElementById('btn-come-back').style.display = "inline-block"
+    }
+
+    function closeEditForm() {
+        document.getElementById('edit-form').style.display = "none";
+        document.getElementById('btn-edit').style.display = "inline-block"
+        document.getElementById('btn-come-back').style.display = "none"
+    }
+
+</script>
+
+<script src="/examples/vendors/jquery/jquery-3.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/examples/libs/bootstrap-3/js/bootstrap.min.js"></script>
+<!-- Moment JS -->
+<script src="/examples/vendors/moment/moment-with-locales.js"></script>
+<!-- Bootstrap DateTimePicker JS -->
+<script src="/examples/vendors/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<!-- Инициализация Bootstrap DateTimePicker -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+</body>
+</html>

@@ -11,12 +11,11 @@ import ru.itis.new_project.models.Person;
 import ru.itis.new_project.models.enums.Categories;
 import ru.itis.new_project.models.forms.LobbyForm;
 import ru.itis.new_project.repositories.LobbyRepository;
-import ru.itis.new_project.repositories.PersonLobbyRepository;
 import ru.itis.new_project.repositories.PersonRepository;
 import ru.itis.new_project.security.details.PersonDetailsImpl;
 import ru.itis.new_project.services.LobbyService;
 import ru.itis.new_project.services.LobbyServiceImpl;
-import ru.itis.new_project.services.MainPageService;
+import ru.itis.new_project.services.PersonService;
 import ru.itis.new_project.services.facades.IAuthenticationFacade;
 
 import java.time.LocalDate;
@@ -25,12 +24,11 @@ import java.util.*;
 
 
 @Controller
+@RequestMapping("/lobbies")
 public class MainPageController {
 
     @Autowired
-    private PersonLobbyRepository plRepo;
-    @Autowired
-    private MainPageService mainPageService;
+    private PersonService personService;
     @Autowired
     private PersonRepository personRepository;
     @Autowired
@@ -40,12 +38,7 @@ public class MainPageController {
     @Autowired
     LobbyRepository lobbyRepository;
 
-    @GetMapping("/")
-    public String getPages() {
-        return "redirect:/lobbies";
-    }
-
-    @GetMapping("/lobbies/sort")
+    @GetMapping("/sort")
     public String getSortedLobbies(
             @RequestParam(value = "date-start", required = false) String dateStart,
             @RequestParam(value = "date-end", required = false) String dateEnd,
@@ -69,56 +62,42 @@ public class MainPageController {
 
         for (Categories cat : categories) {
             if (cat != null) {
-                lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrue(
+                lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrueAndIsFullFalse(
                         capStart, capEnd, beginDate, endDate, cat
                 ));
             }
         }
 
         if (lobbyList.isEmpty()) {
-            lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrue(
+            lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrueAndIsFullFalse(
                     capStart, capEnd, beginDate, endDate));
+        }
+
+        if(lobbyList.isEmpty()) {
+            model.addAttribute("notFound", true);
+            return "redirect:/lobbies";
         }
         model.addAttribute("lobbies", lobbyList);
         System.out.println(auth.isAuthenticated());
         System.out.println(auth.getName());
-        return mainPageService.isAuthenticated(auth) ? "index-auth" : "index";
+        return personService.isAuthenticated(auth) ? "index-auth" : "index";
     }
 
 
-    @GetMapping("/lobbies")
+    @GetMapping
     public String greeting(Model model) {
         model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
         Authentication auth = authFacade.getAuthentication();
-        return mainPageService.isAuthenticated(auth) ? "index-auth" : "index";
-    }
 
-
-    @GetMapping("/lobbies/{id}")
-    public String showLobbyPage(@PathVariable(value = "id") Long id, Model model) {
-        Authentication auth = authFacade.getAuthentication();
-        if (!mainPageService.isAuthenticated(auth)) return "redirect:/login";
-
-        Optional<Person> person = personRepository.findPersonByEmail(auth.getName());
-        Optional<Lobby> lobby = lobbyRepository.findById(id);
-
-        if (!(person.isPresent() && lobby.isPresent())) return "redirect:/lobbies";
-
-        if (plRepo.findPersonLobbyKeyByLobbyIdAndAndPersonId(id, person.get().getId()).isEmpty())
-            return "redirect:/lobbies";
-
-        model.addAttribute("lobby", lobby.get());
-        return "lobby-page";
-
+        return personService.isAuthenticated(auth) ? "index-auth" : "index";
     }
 
     //TODO Мб перенести в лобби сервис?
-    //TODO Запилить проверку на то есть ли этот человек в лобби или нет
-    @PostMapping("/lobbies/enter/{id}")
+    @PostMapping("/enter/{id}")
     public String enterLobby(@PathVariable("id") Long id) {
 
         Authentication auth = authFacade.getAuthentication();
-        if (!mainPageService.isAuthenticated(auth)) return "redirect:/login";
+        if (!personService.isAuthenticated(auth)) return "redirect:/login";
 
         Optional<Lobby> lobby = lobbyRepository.findById(id);
         Optional<Person> person = personRepository.findPersonByEmail(auth.getName());
@@ -126,13 +105,15 @@ public class MainPageController {
         if (!(lobby.isPresent() && person.isPresent())) return "redirect:/lobbies";
         if (lobby.get().isFull()) return "redirect:/lobbies";
 
-        lobbyService.enterToLobby(id, person.get());
+        // Если человек уже в лобби, то перекидывает на страницу лобби
+        if(lobbyService.isInLobby(id, person.get().getId())) return ("redirect:/lobbies/"+id);
 
+        lobbyService.enterToLobby(id, person.get());
         return "redirect:/lobbies";
     }
 
 
-    @PostMapping("/lobbies/add")
+    @PostMapping("/add")
     public String addLobby(LobbyForm lobbyForm) {
         Authentication auth = authFacade.getAuthentication();
         Person person = ((PersonDetailsImpl) auth.getPrincipal()).getPerson();

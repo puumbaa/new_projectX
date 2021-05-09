@@ -1,0 +1,75 @@
+.full-name-and-my-contact{
+    display: flex;
+    font-size: 30px;
+    background: #f6f7f8;
+    min-width: 22vw;
+    width: max-content;
+    margin: 10vh 0 0 10vw;
+    border: 1px solid #212529;
+    border-radius: 10px;
+    padding: 1vh 1vw;
+}
+.full-name {
+    border: 0;
+    margin: 0 2vw 0 0;
+}
+.my-contact{
+    background-color: #212529;
+    color: #f6f7f8;
+    text-decoration: none;
+    border-radius: 20px;
+    min-width: 14vw;
+    font-size: 1rem;
+    text-align: center;
+    padding-top: .3vh;
+    transition: .5s;
+    font-weight: 400;
+}
+.my-contact:hover{
+    color: #fff;
+    text-decoration: none;
+    -webkit-transform: scale(1.035);
+    -ms-transform: scale(1.035);
+    transform: scale(1.035);
+}
+#edit-form{
+    display: none;
+    flex-direction: column;
+    margin-left: 10vw;
+    margin-top: 5vh;
+}
+
+button#btn-come-back{
+    display: none;
+}
+button#btn-edit,
+button#btn-come-back{
+    margin-right: 5vw;
+    margin-left: 8vw;
+    margin-bottom: 2vh;
+    min-width: 8.75vw;
+}
+
+
+.profile-general-content{
+    display: flex;
+    height: 17vh;
+    max-height: 17vh;
+    align-items: center;
+}
+
+
+.change-person-data{
+    margin: 10vh 0 0 5vh;
+    height: max-content;
+}
+
+label{
+    display: flex;
+    flex-direction: column;
+}
+.profile-container{
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+}

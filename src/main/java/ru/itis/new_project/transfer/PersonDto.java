@@ -14,14 +14,12 @@ import ru.itis.new_project.models.Person;
 public class PersonDto {
     private String name;
     private String surname;
-    private String about;
     private String contacts;
 
     public static PersonDto from(Person person){
         return PersonDto.builder()
                 .name(person.getName())
                 .surname(person.getSurname())
-                .about(person.getAbout())
                 .contacts(person.getContacts())
                 .build();
     }
