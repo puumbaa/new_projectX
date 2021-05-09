@@ -39,6 +39,17 @@
     margin-top: 5vh;
 }
 
+button#btn-come-back{
+    display: none;
+}
+button#btn-edit,
+button#btn-come-back{
+    margin-right: 5vw;
+    margin-left: 8vw;
+    margin-bottom: 2vh;
+    min-width: 8.75vw;
+}
+
 
 .profile-general-content{
     display: flex;

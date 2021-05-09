@@ -31,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //TODO Вернуть обратно в энт матчерс  ,"/lobbies/{[1-9].[0-9]*}"
         http
                 .authorizeRequests()
                     .antMatchers("/myLobbies/**", "/profile").authenticated()

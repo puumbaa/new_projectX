@@ -1,12 +1,288 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin lobby page</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet" href="../static/css/index.css" th:href="@{/css/nav.css}">
+    <link rel="stylesheet" href="../static/css/lobby-page.css" th:href="@{/css/lobby-page.css}">
+    <link rel="stylesheet" href="../static/css/lobby-page-admin.css" th:href="@{/css/lobby-page-admin.css}">
+    <title>Страница лобби</title>
 </head>
 <body>
-    <div th:each="person:${participants}">
-        <h4 th:text="${person.getId()}"></h4>
+
+<!--                       Подтверждение удаления                          -->
+
+<div class="modal fade" id="memberDeleteModal" tabindex="-1" role="dialog" aria-labelledby="memberDeleteModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="memberDeleteModalLabel">Подтвердите удаление</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-footer">
+
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                    Отмена
+                </button>
+
+
+                <form method="POST">
+                    <input type="hidden" name="personId">
+                    <button type="submit" class="btn btn-danger">
+                        Подтвердить
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
     </div>
+</div>
+
+
+<div class="modal fade" id="lobbyDeleteModal" tabindex="-1" role="dialog" aria-labelledby="lobbyDeleteModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="lobbyDeleteModalLabel">Подтвердите удаление</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+
+            <div class="modal-footer">
+
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                    Отмена
+                </button>
+
+
+                <form method="POST">
+                    <button type="submit" class="btn btn-danger">
+                        Подтвердить
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<header th:insert="blocks/my-lobbies-nav.html :: my-lobbies-nav"></header>
+
+
+<div class="lobby-container">
+
+    <div class="lobby-about-container">
+
+        <div class="lobby-admin-title">
+            <h2 th:text="${lobby.eventName}" class="lobby-name"></h2>
+            <button class="btn btn-secondary" id="btn-come-back" value="Click" onmousedown="closeEditForm()">Отменить
+            </button>
+            <button class="btn btn-secondary" id="btn-edit" value="Click" onmousedown="viewEditForm()">Редактировать
+            </button>
+        </div>
+
+
+        <form th:action="@{/lobbies/{id}/admin/editinfo(id=${lobby.getId()})}" id="edit-form" method="POST">
+
+            <div class="edit-labels-general">
+
+                <div class="edit-labels-container">
+                    <label for="eventName" class="edit-label">Название мероприятия
+                        <input type="text" name="eventName" id="eventName" value=""
+                               th:attr="value=${lobby.getEventName()}">
+                    </label>
+
+
+                    <label for="brieflyInfo" class="edit-label">Краткое описание
+                        <input type="text" name="brieflyInfo" id="brieflyInfo" value=""
+                               th:attr="value=${lobby.getBrieflyInfo()}">
+                    </label>
+
+
+                    <label for="date" class="edit-label">Дата
+                        <input type="date" value="" th:attr="value=${lobby.getEventDate()}" id="date"
+                               name="date">
+                    </label>
+                </div>
+
+                <div class="edit-labels-container">
+                    <label for="capacity" class="edit-label">Количество участников
+                        <input type="number" value="" th:attr="value=${lobby.getCapacity()}" id="capacity"
+                               name="capacity">
+                    </label>
+
+
+                    <label for="aboutEvent" class="edit-label">Полное описание
+                        <textarea th:text="${lobby.getAboutEvent()}" id="aboutEvent"
+                                  name="aboutEvent" cols="50" rows="6">
+                        </textarea>
+                    </label>
+
+
+                    <label for="chatLink" class="edit-label">Ссылка на беседу
+                        <input type="text" value="" th:attr="value=${lobby.getChatLink()}" id="chatLink"
+                               name="chatLink">
+                    </label>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn btn-success">Сохранить данные</button>
+
+        </form>
+
+        <div class="about-info">
+            <p th:text="${lobby.aboutEvent}"></p>
+        </div>
+
+
+        <div class="lobby-buttons">
+
+            <form th:action="@{/lobbies/{id}/leave(id=${lobby.getId()})}" method="POST">
+                <button type="submit" class="btn">Выйти</button>
+            </form>
+
+            <a th:href="${lobby.chatLink}">
+                <button class="btn" type="button">В беседу</button>
+            </a>
+
+
+            <button data-toggle="modal" data-target="#lobbyDeleteModal" type="button" class="btn btn-danger" data-id=""
+                    th:attr="data-id=${lobby.getId()}">
+                Удалить лобби
+            </button>
+
+        </div>
+
+
+        <div class="lobby-data">
+            <div>
+                <p>Заполненность</p>
+                <span th:text="${lobby.countOfMembers}"></span>
+                <span>/</span>
+                <span th:text="${lobby.capacity}"></span>
+            </div>
+
+
+            <div>
+                <p>Дата:</p>
+                <span th:text="${lobby.getSimpleDate()}"></span>
+            </div>
+
+        </div>
+
+
+        <h2 class="lobby-name members-title">Участники лобби</h2>
+
+        <div class="members-container">
+
+
+            <div th:each="member:${participants}" class="member-item">
+
+                <a th:href="'https://'+${member.getContacts()}"
+                   th:text="${member.getName()} +' '+${member.getSurname()}"></a>
+
+
+                <button type="button" class="delete btn-danger btn" data-toggle="modal" data-target="#memberDeleteModal"
+                        data-member-id="" data-lobby-id=""
+                        th:attr="data-member-id=${member.getId()},data-lobby-id=${lobby.getId()}">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>
+    $('#lobbyDeleteModal').on('show.bs.modal', function (event) {
+
+        var id = $(event.relatedTarget).data('id')
+        var a = document.querySelector("form");
+        a.setAttribute("action", "/lobbies/" + id + "/admin/deletelobby");
+
+    })
+
+    $('#memberDeleteModal').on('show.bs.modal', function (event) {
+
+        var memberId = $(event.relatedTarget).data('member-id');
+        var lobbyId = $(event.relatedTarget).data('lobby-id');
+        var form = document.querySelector("form");
+        var input = document.querySelector("input");
+        form.setAttribute("action", "/lobbies/" + lobbyId + "/admin/deleteuser");
+        input.setAttribute("value", memberId);
+
+    })
+
+
+
+    function viewEditForm() {
+        document.getElementById('edit-form').style.display = "flex";
+        document.getElementById('btn-edit').style.display = "none"
+        document.getElementById('btn-come-back').style.display = "inline-block"
+    }
+
+    function closeEditForm() {
+        document.getElementById('edit-form').style.display = "none";
+        document.getElementById('btn-edit').style.display = "inline-block"
+        document.getElementById('btn-come-back').style.display = "none"
+    }
+
+</script>
+
+
+
+
+<script src="/examples/vendors/jquery/jquery-3.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/examples/libs/bootstrap-3/js/bootstrap.min.js"></script>
+<!-- Moment JS -->
+<script src="/examples/vendors/moment/moment-with-locales.js"></script>
+<!-- Bootstrap DateTimePicker JS -->
+<script src="/examples/vendors/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<!-- Инициализация Bootstrap DateTimePicker -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 </body>
 </html>

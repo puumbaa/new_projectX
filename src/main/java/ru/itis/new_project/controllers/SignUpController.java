@@ -21,9 +21,10 @@ public class SignUpController {
 
     @PostMapping("/sign_up")
     public String signUp(Model model, PersonForm personForm){
-        if(!signUpService.validateEmail(personForm.getEmail())) return "signUp";
+        if(!signUpService.isPersonValid(personForm, model)) return "signUp";
 
         signUpService.signUp(personForm);
+
         return "redirect:/login";
     }
 }

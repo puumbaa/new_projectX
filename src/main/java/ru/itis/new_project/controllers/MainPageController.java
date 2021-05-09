@@ -72,6 +72,11 @@ public class MainPageController {
             lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrueAndIsFullFalse(
                     capStart, capEnd, beginDate, endDate));
         }
+
+        if(lobbyList.isEmpty()) {
+            model.addAttribute("notFound", true);
+            return "redirect:/lobbies";
+        }
         model.addAttribute("lobbies", lobbyList);
         System.out.println(auth.isAuthenticated());
         System.out.println(auth.getName());
