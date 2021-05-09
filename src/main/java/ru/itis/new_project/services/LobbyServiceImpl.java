@@ -3,6 +3,7 @@ package ru.itis.new_project.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import ru.itis.new_project.models.Lobby;
 import ru.itis.new_project.models.Person;
 import ru.itis.new_project.models.enums.Categories;
@@ -25,6 +26,8 @@ public class LobbyServiceImpl implements LobbyService{
     @Autowired
     private LobbyRepository lobbyRepository;
     @Autowired
+    private PersonService personService;
+    @Autowired
     private PersonRepository personRepository;
 
     public static LocalDate getDate(String date) {
@@ -33,7 +36,8 @@ public class LobbyServiceImpl implements LobbyService{
     }
 
     @Override
-    public void createLobby(LobbyForm lobbyForm, Person person) {
+    public void createLobby(LobbyForm lobbyForm, String email){
+        Person person = personRepository.findPersonByEmail(email).get();
 
         Lobby lobby = Lobby.builder()
                 .eventName(lobbyForm.getEventName())
@@ -50,7 +54,6 @@ public class LobbyServiceImpl implements LobbyService{
                 .isFull(false)
                 .build();
 
-        person = personRepository.findPersonByEmail(person.getEmail()).get();
         lobby.getPersonSet().add(person);
 
         lobbyRepository.save(lobby);
@@ -122,5 +125,19 @@ public class LobbyServiceImpl implements LobbyService{
         lobby.setCountOfMembers(0);
 
         lobbyRepository.save(lobby);
+    }
+
+    @Override
+    public boolean isLobbyValid(String chatLink, String name, Model model) {
+        boolean res = true;
+        if(personService.isContactLinkValid(chatLink)){
+            model.addAttribute("chatLinkErr", true);
+            res = false;
+        }
+        if(lobbyRepository.findByEventNameIgnoreCase(name).isPresent()){
+            model.addAttribute("lobbyNameErr", true);
+            res = false;
+        }
+        return res;
     }
 }

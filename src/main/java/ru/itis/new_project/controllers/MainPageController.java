@@ -114,11 +114,15 @@ public class MainPageController {
 
 
     @PostMapping("/add")
-    public String addLobby(LobbyForm lobbyForm) {
+    public String addLobby(LobbyForm lobbyForm, Model model) {
         Authentication auth = authFacade.getAuthentication();
-        Person person = ((PersonDetailsImpl) auth.getPrincipal()).getPerson();
+        lobbyForm.setChatLink(lobbyForm.getChatLink().replace("https://", ""));
 
-        lobbyService.createLobby(lobbyForm, person);
+        if(!lobbyService.isLobbyValid(lobbyForm.getChatLink(), lobbyForm.getEventName(), model)){
+            return "index-auth";
+        }
+
+        lobbyService.createLobby(lobbyForm, auth.getName());
         return "redirect:/lobbies";
     }
 }

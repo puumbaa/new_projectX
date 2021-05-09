@@ -13,6 +13,7 @@ import ru.itis.new_project.models.enums.Categories;
 import javax.persistence.Lob;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LobbyRepository extends JpaRepository<Lobby,Long> {
@@ -35,4 +36,6 @@ public interface LobbyRepository extends JpaRepository<Lobby,Long> {
     @Query(nativeQuery = true, value = "SELECT * FROM lobby l INNER JOIN person_lobby pl " +
             "ON l.id = pl.lobby_id WHERE (pl.person_id = ? and l.is_actual = true)")
     List<Lobby> findAllByInLobby(Long personId);
+
+    Optional<Lobby> findByEventNameIgnoreCase(String eventName);
 }
