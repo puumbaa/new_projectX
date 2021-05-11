@@ -29,6 +29,11 @@
 </head>
 <body>
 
+<div th:if="${error}" id="slideSource" class="alert alert-danger" aria-label="Close" role="alert">
+    <strong>Ошибка</strong> вы ввели неверные данные
+    <button type="button" id="handle" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div class="form-style-2">
 
     <div class="form-container">
@@ -59,6 +64,19 @@
 
 </div>
 
+<script th:if="${error}">
+    const slideSource = document.getElementById('slideSource');
+    document.getElementById('handle').onclick = function () {
+        slideSource.style.display = "none";
+    }
+    slideSource.style.bottom="4vh";
+    setTimeout(function(){
+        slideSource.style.bottom="-15vh"
+    },3500)
+
+</script>
+
+
 
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>
 <!-- Bootstrap JS -->
@@ -71,4 +89,5 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 </body>
+
 </html>

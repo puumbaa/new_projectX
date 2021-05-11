@@ -25,7 +25,6 @@ public interface LobbyRepository extends JpaRepository<Lobby,Long> {
                                                                                        LocalDate eventDate, LocalDate eventDate2);
 
     List<Lobby> findAllByActualTrue();
-
     @Transactional
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE lobby SET is_actual = false WHERE id = ?")
