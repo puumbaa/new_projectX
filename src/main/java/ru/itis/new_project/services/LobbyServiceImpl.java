@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -139,5 +140,25 @@ public class LobbyServiceImpl implements LobbyService{
             res = false;
         }
         return res;
+    }
+
+    @Override
+    public boolean isUpdatableDataValid(Long lobbyId, String eventName, String chatLink, Model model) {
+        boolean res = true;
+        if(!personService.isContactLinkValid(chatLink)){
+            model.addAttribute("chatLinkErr", true);
+            res = false;
+        }
+        if(!isEventNameValid(eventName, lobbyId)){
+            model.addAttribute("lobbyNameErr", true);
+            res = false;
+        }
+        return res;
+    }
+
+    private boolean isEventNameValid(String name, Long lobbyId){
+        return lobbyRepository.findByEventNameIgnoreCase(name)
+                .map(lobby -> lobby.getId().equals(lobbyId))
+                .orElse(false);
     }
 }

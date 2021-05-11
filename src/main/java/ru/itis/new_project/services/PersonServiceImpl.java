@@ -48,9 +48,8 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public boolean isContactLinkValid(String contactLink) {
         try {
-            URL url = new URL(contactLink);
+            URL url = new URL(contactLink.contains("https://") ? contactLink : "https://" + contactLink);
             HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-            huc.setRequestMethod("HEAD");
             huc.setInstanceFollowRedirects(false);
             String respMessage = huc.getResponseMessage();
 
