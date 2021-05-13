@@ -34,7 +34,13 @@ public class PersonalPageController {
 
     @PostMapping("/edit")
     public String editProfile(Long personId, String newContactLink, String oldPass, String newPass, Model model) {
-        if(!personService.isUpdatableDataValid(personId, oldPass, newContactLink, model)) return "profile";
+        model.addAttribute("contactErr", false);
+        model.addAttribute("passErr", false);
+
+        if(!personService.isUpdatableDataValid(personId, oldPass, newContactLink, model)){
+            model.addAttribute("person",personRepository.findById(personId).get());
+            return "profile";
+        }
 
         personService.updateInfo(personId, newContactLink, newPass);
 

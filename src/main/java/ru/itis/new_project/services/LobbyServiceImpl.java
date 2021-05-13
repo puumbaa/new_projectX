@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class LobbyServiceImpl implements LobbyService{
@@ -128,14 +127,10 @@ public class LobbyServiceImpl implements LobbyService{
     }
 
     @Override
-    public boolean isLobbyValid(String chatLink, String name, Model model) {
+    public boolean isLobbyValid(String chatLink, Model model) {
         boolean res = true;
-        if(personService.isContactLinkValid(chatLink)){
+        if(!personService.isContactLinkValid(chatLink)){
             model.addAttribute("chatLinkErr", true);
-            res = false;
-        }
-        if(lobbyRepository.findByEventNameIgnoreCase(name).isPresent()){
-            model.addAttribute("lobbyNameErr", true);
             res = false;
         }
         return res;

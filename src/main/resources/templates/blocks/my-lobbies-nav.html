@@ -50,7 +50,6 @@
                 </div>
 
 
-                <!-- todo доделать форму -->
 
                 <div class="modal-body">
                     <form action="/lobbies/add" method="POST">
@@ -58,7 +57,7 @@
                         <fieldset>
                             <div>
                                 <label for="eventName">Название мероприятия</label>
-                                <input type="text" name="eventName" id="eventName">
+                                <input type="text" name="eventName" id="eventName" required maxlength="60">
                             </div>
 
                             <div>
@@ -70,33 +69,32 @@
                                     <option value="LEISURE">Активный отдых</option>
                                     <option value="PARTY">Тусовка</option>
                                     <option value="SOCIAL">Социальное</option>
-                                    <option value="OTHER">Другое</option>
                                 </select>
                             </div>
 
                             <div>
                                 <label for="brieflyInfo">Краткое описание</label>
-                                <input type="text" name="brieflyInfo" id="brieflyInfo">
+                                <input type="text" name="brieflyInfo" id="brieflyInfo" required maxlength="100">
                             </div>
 
                             <div>
                                 <label for="date">Дата и время</label>
-                                <input type="date" name="date" id="date">
+                                <input type="date" name="date" id="date" required>
                             </div>
 
                             <div>
-                                <label for="capacity">Количество людей</label>
-                                <input type="text" name="capacity" id="capacity">
+                                <label for="capacity">Количество участников</label>
+                                <input type="number" name="capacity" id="capacity" required min="2" max="60">
                             </div>
 
                             <div>
                                 <label for="aboutEvent">Полное описание</label>
-                                <textarea name="aboutEvent" id="aboutEvent" cols="50" rows="6"></textarea>
+                                <textarea name="aboutEvent" id="aboutEvent" cols="50" rows="6" required maxlength="60"></textarea>
                             </div>
 
                             <div>
                                 <label for="chatLink"> Ссылка на беседу </label>
-                                <input type="text" name="chatLink" id="chatLink">
+                                <input type="text" name="chatLink" id="chatLink" required>
                             </div>
 
 
@@ -106,6 +104,7 @@
                             <button type="submit" class="btn btn-primary">Добавить лобби</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                         </div>
+
 
                     </form>
                 </div>

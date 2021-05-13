@@ -25,12 +25,19 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/nav.css">
     <link rel="stylesheet" href="/css/my-lobbies.css">
+    <link rel="stylesheet" href="/css/error-toast.css">
 
     <title>Мои лобби</title>
 </head>
 <body>
 
 <header th:insert="blocks/my-lobbies-nav.html :: my-lobbies-nav"></header>
+
+<div th:if="${chatLinkErr}" id="slideSource" class="alert alert-danger" aria-label="Close" role="alert">
+    <strong>Ошибка</strong> вы ввели некоректную ссылку на беседу
+    <button type="button" id="handle" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 
 <div class="container-fluid">
 
@@ -130,6 +137,55 @@
         evt.currentTarget.className += " active";
     }
 </script>
+
+
+<script>
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1; //January is 0
+    let yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("date").setAttribute("min", today);
+
+
+    mm = parseInt(mm) + 1;
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    if (mm > 12) {
+        yyyy = yyyy + 1;
+        mm = '01';
+    }
+
+    let monthAfterToday = yyyy + '-' + mm + "-" + dd;
+    document.getElementById("date").setAttribute("max", monthAfterToday);
+
+
+    $("#date").validate();
+</script>
+
+
+
+
+<script th:if="${chatLinkErr}">
+    const slideSource = document.getElementById('slideSource');
+    document.getElementById('handle').onclick = function () {
+        slideSource.style.display = "none";
+    }
+    slideSource.style.bottom="4vh";
+    setTimeout(function(){
+        slideSource.style.bottom="-15vh"
+    },3500)
+</script>
+
+
+
 
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>
 <!-- Bootstrap JS -->

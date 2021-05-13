@@ -4,8 +4,6 @@ import org.springframework.ui.Model;
 import ru.itis.new_project.models.Person;
 import ru.itis.new_project.models.forms.LobbyForm;
 
-import java.time.LocalDate;
-
 public interface LobbyService {
     void createLobby(LobbyForm lobbyForm, String email);
     void enterToLobby(Long lobbyId, Person person);
@@ -13,7 +11,7 @@ public interface LobbyService {
 
     void checkLobbiesDate();
 
-    boolean isLobbyValid(String chatLink, String name, Model model);
+    boolean isLobbyValid(String chatLink, Model model);
     void updateLobbyInfo(LobbyForm lobbyForm, Long lobbyId);
 
     void deleteUser(Long lobbyId, Long personId);

@@ -119,7 +119,9 @@ public class MainPageController {
         Authentication auth = authFacade.getAuthentication();
         lobbyForm.setChatLink(lobbyForm.getChatLink().replace("https://", ""));
 
-        if(!lobbyService.isLobbyValid(lobbyForm.getChatLink(), lobbyForm.getEventName(), model)){
+        model.addAttribute("chatLinkErr", false);
+        if(!lobbyService.isLobbyValid(lobbyForm.getChatLink(), model)){
+            model.addAttribute("lobbies",lobbyRepository.findAllByActualTrue());
             return "index-auth";
         }
 

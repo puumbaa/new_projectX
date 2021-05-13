@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
 
@@ -54,7 +54,7 @@
                 </button>
 
 
-                <form method="POST">
+                <form method="POST" id="member-delete-form">
                     <input type="hidden" name="personId">
                     <button type="submit" class="btn btn-danger">
                         Подтвердить
@@ -90,7 +90,7 @@
                 </button>
 
 
-                <form method="POST">
+                <form method="POST" id="lobby-delete-form">
                     <button type="submit" class="btn btn-danger">
                         Подтвердить
                     </button>
@@ -182,10 +182,11 @@
             </a>
 
 
-            <button data-toggle="modal" data-target="#lobbyDeleteModal" type="button" class="btn btn-danger" data-id=""
-                    th:attr="data-id=${lobby.getId()}">
+            <button data-toggle="modal" data-target="#lobbyDeleteModal" type="button" class="btn btn-danger"
+                    data-id="" th:attr="data-id=${lobby.getId()}">
                 Удалить лобби
             </button>
+
 
         </div>
 
@@ -239,10 +240,13 @@
     $('#lobbyDeleteModal').on('show.bs.modal', function (event) {
 
         var id = $(event.relatedTarget).data('id')
-        var a = document.querySelector("form");
+        var a = document.querySelector("#lobby-delete-form");
+        var modal = $(this)
         a.setAttribute("action", "/lobbies/" + id + "/admin/deletelobby");
+        a.setAttribute("method", "POST")
 
     })
+
 
     $('#memberDeleteModal').on('show.bs.modal', function (event) {
 
@@ -254,7 +258,6 @@
         input.setAttribute("value", memberId);
 
     })
-
 
 
     function viewEditForm() {
@@ -270,8 +273,6 @@
     }
 
 </script>
-
-
 
 
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>

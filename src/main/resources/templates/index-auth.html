@@ -24,9 +24,7 @@
     </script>
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/nav.css">
-    <link rel="stylesheet" href="../static/css/index.css">
-    <link rel="stylesheet" href="../static/css/nav.css">
-
+    <link rel="stylesheet" href="/css/error-toast.css">
     <title>Главная</title>
 
 </head>
@@ -71,6 +69,12 @@
 
 
 <header th:insert="blocks/nav.html :: nav"></header>
+
+<div th:if="${chatLinkErr}" id="slideSource" class="alert alert-danger" aria-label="Close" role="alert">
+    <strong>Ошибка</strong> вы ввели некоректную ссылку на беседу
+    <button type="button" id="handle" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 
 <div class="container-sort">
 
@@ -205,6 +209,7 @@
         mm = '0' + mm;
     }
     today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("date-start").setAttribute("min",  today);
     document.getElementById("date").setAttribute("min", today);
 
 
@@ -222,6 +227,20 @@
 
 
     $("#date").validate();
+</script>
+
+
+
+
+<script th:if="${chatLinkErr}">
+    const slideSource = document.getElementById('slideSource');
+    document.getElementById('handle').onclick = function () {
+        slideSource.style.display = "none";
+    }
+    slideSource.style.bottom="4vh";
+    setTimeout(function(){
+        slideSource.style.bottom="-15vh"
+    },3500)
 </script>
 
 

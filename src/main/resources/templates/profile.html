@@ -26,11 +26,24 @@
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/error-toast.css">
     <title>Личный кабинет</title>
 </head>
 <body>
-
 <header th:insert="blocks/nav.html :: nav"></header>
+
+
+<div th:if="${contactErr}" id="slideSource" class="alert alert-danger" aria-label="Close" role="alert">
+    <strong>Ошибка</strong> вы ввели некоректную контактную ссылку
+    <button type="button" id="handle" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+
+<div th:if="${passErr}" id="slideSource-1" class="alert alert-danger" aria-label="Close" role="alert">
+    <strong>Ошибка</strong> неверный старый пароль
+    <button type="button" id="handle-1" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div class="profile-container">
 
     <div class="profile-general-content">
@@ -88,6 +101,33 @@
     }
 
 </script>
+
+
+
+<script th:if="${contactErr}">
+    const slideSource = document.getElementById('slideSource');
+    document.getElementById('handle').onclick = function () {
+        slideSource.style.display = "none";
+    }
+    slideSource.style.bottom="4vh";
+    setTimeout(function(){
+        slideSource.style.bottom="-15vh"
+    },3500)
+</script>
+
+
+<script th:if="${passErr}">
+    const slideSource = document.getElementById('slideSource-1');
+    document.getElementById('handle-1').onclick = function () {
+        slideSource.style.display = "none";
+    }
+    slideSource.style.bottom="4vh";
+    setTimeout(function(){
+        slideSource.style.bottom="-15vh"
+    },3500)
+</script>
+
+
 
 <script src="/examples/vendors/jquery/jquery-3.min.js"></script>
 <!-- Bootstrap JS -->

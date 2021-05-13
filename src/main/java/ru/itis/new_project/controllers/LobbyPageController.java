@@ -30,6 +30,7 @@ public class LobbyPageController {
     @Autowired
     private LobbyService lobbyService;
 
+
     @GetMapping("/lobbies/{id}")
     public String showLobbyPage(@PathVariable(value = "id") Long id, Model model) {
         Authentication auth = authFacade.getAuthentication();

@@ -70,24 +70,3 @@ input:focus {
 }
 
 
-
-button#handle:active,
-button#handle:focus {
-    outline: none;
-}
-button#handle::-moz-focus-inner {
-    border: 0;
-}
-
-.alert-danger {
-    display: block;
-    position: fixed;
-    color: #842029;
-    background-color: #f8d7da;
-    border-color: #f5c2c7;
-    bottom: -15vh;
-    left: 4vw;
-    margin: 0;
-    transition: 1s;
-}
-

@@ -50,9 +50,10 @@ public class PersonServiceImpl implements PersonService {
         try {
             URL url = new URL(contactLink);
             HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-            huc.setRequestMethod("HEAD");
             huc.setInstanceFollowRedirects(false);
             String respMessage = huc.getResponseMessage();
+            System.out.println(respMessage);
+            System.out.println(contactLink.contains("vk.com"));
 
             return ((HttpStatus.OK.getReasonPhrase().equals(respMessage) ||
                     (HttpStatus.FOUND.getReasonPhrase().equals(respMessage)) &&
