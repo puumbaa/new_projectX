@@ -45,9 +45,12 @@ public class AdminLobbyPage {
 
     @PostMapping("/editinfo")
     public String editLobbyInfo(@PathVariable("id") Long lobbyId, LobbyForm lobbyForm, Model model){
-        lobbyForm.setChatLink(lobbyForm.getChatLink().replace("http://",""));
+        lobbyForm.setChatLink(
+                lobbyForm.getChatLink().contains("https://") ?
+                        lobbyForm.getChatLink() : "https://" + lobbyForm.getChatLink()
+        );
 
-        if(!lobbyService.isUpdatableDataValid(lobbyId, lobbyForm.getEventName(), lobbyForm.getChatLink(), model)){
+        if(!lobbyService.isUpdatableDataValid(lobbyId, lobbyForm.getChatLink(), model)){
            return getLobbyPage(lobbyId, model);
         }
 

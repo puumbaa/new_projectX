@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+
 @Repository
 public interface LobbyRepository extends JpaRepository<Lobby,Long> {
     List<Lobby> findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrueAndIsFullFalse(Integer capacity, Integer capacity2,

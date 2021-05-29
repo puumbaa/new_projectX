@@ -129,36 +129,27 @@ public class LobbyServiceImpl implements LobbyService{
     }
 
     @Override
-    public boolean isLobbyValid(String chatLink, String name, Model model) {
+    public boolean isLobbyValid(String chatLink, Model model) {
         boolean res = true;
-        if(personService.isContactLinkValid(chatLink)){
+
+        if(!personService.isContactLinkValid(chatLink)){
             model.addAttribute("chatLinkErr", true);
             res = false;
         }
-        if(lobbyRepository.findByEventNameIgnoreCase(name).isPresent()){
-            model.addAttribute("lobbyNameErr", true);
-            res = false;
-        }
+
         return res;
     }
 
     @Override
-    public boolean isUpdatableDataValid(Long lobbyId, String eventName, String chatLink, Model model) {
+    public boolean isUpdatableDataValid(Long lobbyId, String chatLink, Model model) {
+
         boolean res = true;
         if(!personService.isContactLinkValid(chatLink)){
             model.addAttribute("chatLinkErr", true);
             res = false;
         }
-        if(!isEventNameValid(eventName, lobbyId)){
-            model.addAttribute("lobbyNameErr", true);
-            res = false;
-        }
+
         return res;
     }
 
-    private boolean isEventNameValid(String name, Long lobbyId){
-        return lobbyRepository.findByEventNameIgnoreCase(name)
-                .map(lobby -> lobby.getId().equals(lobbyId))
-                .orElse(false);
-    }
 }

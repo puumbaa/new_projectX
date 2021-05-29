@@ -13,12 +13,12 @@ public interface LobbyService {
 
     void checkLobbiesDate();
 
-    boolean isLobbyValid(String chatLink, String name, Model model);
+    boolean isLobbyValid(String chatLink, Model model);
     void updateLobbyInfo(LobbyForm lobbyForm, Long lobbyId);
 
     void deleteUser(Long lobbyId, Long personId);
     void deleteLobby(Long lobbyId);
 
-    boolean isUpdatableDataValid(Long lobbyId, String eventName, String chatLink, Model model);
+    boolean isUpdatableDataValid(Long lobbyId, String chatLink, Model model);
 }
 

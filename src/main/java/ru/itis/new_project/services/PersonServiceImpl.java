@@ -30,8 +30,9 @@ public class PersonServiceImpl implements PersonService {
         Person person = personRepository.findById(personId).get();
 
         person.setContacts(newContactLink);
-        person.setPassword(passwordEncoder.encode(newPass));
-
+        if(!newPass.equals("")) {
+            person.setPassword(passwordEncoder.encode(newPass));
+        }
         personRepository.save(person);
     }
 
@@ -49,13 +50,16 @@ public class PersonServiceImpl implements PersonService {
     public boolean isContactLinkValid(String contactLink) {
         try {
             URL url = new URL(contactLink.contains("https://") ? contactLink : "https://" + contactLink);
+
             HttpURLConnection huc = (HttpURLConnection) url.openConnection();
             huc.setInstanceFollowRedirects(false);
+
             String respMessage = huc.getResponseMessage();
 
             return ((HttpStatus.OK.getReasonPhrase().equals(respMessage) ||
                     (HttpStatus.FOUND.getReasonPhrase().equals(respMessage)) &&
                             contactLink.contains("vk.com")));
+
         } catch (Exception e) {
             return false;
         }
@@ -64,14 +68,17 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public boolean isUpdatableDataValid(Long personId, String oldPass, String contactLink, Model model) {
         boolean res = true;
+
         if (!isContactLinkValid(contactLink)) {
             model.addAttribute("contactErr", true);
             res = false;
         }
-        if (!isEqualPasswords(personId, oldPass)) {
+
+        if (!isEqualPasswords(personId, oldPass) && !oldPass.equals("")) {
             model.addAttribute("passErr", true);
             res = false;
         }
+
         return res;
     }
 }
