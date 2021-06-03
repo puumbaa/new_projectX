@@ -79,6 +79,7 @@ public class LobbyServiceImpl implements LobbyService{
     @Scheduled(cron = "0 0 0 * * *")
     public void checkLobbiesDate(){
         List<Lobby> allByActualTrue = lobbyRepository.findAllByActualTrue();
+
         for (Lobby lobby: allByActualTrue){
             if (lobby.getEventDate().compareTo(LocalDate.now())<0){
                 lobbyRepository.updateActualTrueById(lobby.getId());
