@@ -16,6 +16,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class LobbyServiceImpl implements LobbyService{
@@ -79,7 +81,6 @@ public class LobbyServiceImpl implements LobbyService{
     @Scheduled(cron = "0 0 0 * * *")
     public void checkLobbiesDate(){
         List<Lobby> allByActualTrue = lobbyRepository.findAllByActualTrue();
-
         for (Lobby lobby: allByActualTrue){
             if (lobby.getEventDate().compareTo(LocalDate.now())<0){
                 lobbyRepository.updateActualTrueById(lobby.getId());
@@ -130,10 +131,25 @@ public class LobbyServiceImpl implements LobbyService{
     @Override
     public boolean isLobbyValid(String chatLink, Model model) {
         boolean res = true;
+
         if(!personService.isContactLinkValid(chatLink)){
             model.addAttribute("chatLinkErr", true);
             res = false;
         }
+
         return res;
     }
+
+    @Override
+    public boolean isUpdatableDataValid(Long lobbyId, String chatLink, Model model) {
+
+        boolean res = true;
+        if(!personService.isContactLinkValid(chatLink)){
+            model.addAttribute("chatLinkErr", true);
+            res = false;
+        }
+
+        return res;
+    }
+
 }

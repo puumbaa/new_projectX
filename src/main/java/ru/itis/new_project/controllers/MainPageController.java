@@ -57,9 +57,7 @@ public class MainPageController {
         // HARDCODE НО ЕГО ЛУЧШЕ НЕ УБИРАТЬ
         LocalDate beginDate = dateStart.equals("") ? LocalDate.parse("2021-01-01") : LobbyServiceImpl.getDate(dateStart);
         LocalDate endDate = dateEnd.equals("") ? LocalDate.parse("2030-01-01") : LobbyServiceImpl.getDate(dateEnd);
-
         List<Lobby> lobbyList = new ArrayList<>();
-
         for (Categories cat : categories) {
             if (cat != null) {
                 lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndEventCategoryAndActualTrueAndIsFullFalse(
@@ -67,12 +65,10 @@ public class MainPageController {
                 ));
             }
         }
-
         if (lobbyList.isEmpty()) {
             lobbyList.addAll(lobbyRepository.findAllByCapacityBetweenAndEventDateBetweenAndActualTrueAndIsFullFalse(
                     capStart, capEnd, beginDate, endDate));
         }
-
         if(lobbyList.isEmpty()) {
             model.addAttribute("notFound", true);
             model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
@@ -89,7 +85,6 @@ public class MainPageController {
     public String greeting(Model model) {
         model.addAttribute("lobbies", lobbyRepository.findAllByActualTrue());
         Authentication auth = authFacade.getAuthentication();
-
         return personService.isAuthenticated(auth) ? "index-auth" : "index";
     }
 
@@ -113,15 +108,16 @@ public class MainPageController {
         return "redirect:/lobbies";
     }
 
-
     @PostMapping("/add")
     public String addLobby(LobbyForm lobbyForm, Model model) {
         Authentication auth = authFacade.getAuthentication();
-        lobbyForm.setChatLink(lobbyForm.getChatLink().replace("https://", ""));
 
-        model.addAttribute("chatLinkErr", false);
+        lobbyForm.setChatLink(
+                lobbyForm.getChatLink().contains("https://") ?
+                        lobbyForm.getChatLink() : "https://" + lobbyForm.getChatLink()
+        );
+
         if(!lobbyService.isLobbyValid(lobbyForm.getChatLink(), model)){
-            model.addAttribute("lobbies",lobbyRepository.findAllByActualTrue());
             return "index-auth";
         }
 

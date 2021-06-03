@@ -40,10 +40,20 @@ public class AdminLobbyPage {
         return "lobby-page-admin";
     }
 
+
+    //TODO Валидация по работоспособности чат линка и ивент нейму
+
     @PostMapping("/editinfo")
     public String editLobbyInfo(@PathVariable("id") Long lobbyId, LobbyForm lobbyForm, Model model){
-        lobbyForm.setChatLink(lobbyForm.getChatLink().replace("http://",""));
-        if(!lobbyService.isLobbyValid(lobbyForm.getChatLink(), model))
+        lobbyForm.setChatLink(
+                lobbyForm.getChatLink().contains("https://") ?
+                        lobbyForm.getChatLink() : "https://" + lobbyForm.getChatLink()
+        );
+
+        if(!lobbyService.isUpdatableDataValid(lobbyId, lobbyForm.getChatLink(), model)){
+           return getLobbyPage(lobbyId, model);
+        }
+
         lobbyService.updateLobbyInfo(lobbyForm, lobbyId);
 
         return "redirect:/lobbies/"+lobbyId;

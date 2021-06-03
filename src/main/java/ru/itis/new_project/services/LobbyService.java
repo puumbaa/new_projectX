@@ -16,5 +16,7 @@ public interface LobbyService {
 
     void deleteUser(Long lobbyId, Long personId);
     void deleteLobby(Long lobbyId);
+
+    boolean isUpdatableDataValid(Long lobbyId, String chatLink, Model model);
 }
 
