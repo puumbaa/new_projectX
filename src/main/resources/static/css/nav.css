@@ -55,7 +55,7 @@ body {
     justify-content: space-between;
 }
 
-.navbar > .container-fluid {
+.navbar .container-fluid {
     padding: 0 10vw;
 }
 

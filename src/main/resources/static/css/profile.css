@@ -64,7 +64,7 @@ button#btn-come-back{
     height: max-content;
 }
 
-label{
+.profile-label-elem label{
     display: flex;
     flex-direction: column;
 }

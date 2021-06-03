@@ -23,10 +23,10 @@
             crossorigin="anonymous">
     </script>
 
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/nav.css">
-    <link rel="stylesheet" href="css/profile.css">
-    <link rel="stylesheet" href="css/error-toast.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/nav.css">
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/error-toast.css">
     <title>Личный кабинет</title>
 </head>
 <body>
@@ -84,6 +84,43 @@
         <button type="submit" class="btn btn-success">Сохранить данные</button>
     </form>
 </div>
+
+
+
+
+<script>
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1; //January is 0
+    let yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("date-start").setAttribute("min",  today);
+    document.getElementById("date").setAttribute("min", today);
+
+
+    mm = parseInt(mm) + 1;
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    if (mm > 12) {
+        yyyy = yyyy + 1;
+        mm = '01';
+    }
+
+    let monthAfterToday = yyyy + '-' + mm + "-" + dd;
+    document.getElementById("date").setAttribute("max", monthAfterToday);
+
+
+    $("#date").validate();
+</script>
+
+
 
 
 <script>
