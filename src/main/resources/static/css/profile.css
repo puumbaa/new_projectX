@@ -34,6 +34,8 @@
 }
 #edit-form{
     display: none;
+    max-width: 33.5vw;
+    min-width: 33.5vw;
     flex-direction: column;
     margin-left: 10vw;
     margin-top: 5vh;
