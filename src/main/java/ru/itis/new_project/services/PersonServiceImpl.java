@@ -60,7 +60,7 @@ public class PersonServiceImpl implements PersonService {
 
             return ((HttpStatus.OK.getReasonPhrase().equals(respMessage) ||
                     (HttpStatus.FOUND.getReasonPhrase().equals(respMessage)) &&
-                            contactLink.contains("vk.com")));
+                            (contactLink.contains("vk.com") || contactLink.contains("vk.me"))));
 
         } catch (Exception e) {
             return false;

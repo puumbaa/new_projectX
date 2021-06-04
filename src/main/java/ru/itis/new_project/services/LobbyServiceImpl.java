@@ -131,12 +131,10 @@ public class LobbyServiceImpl implements LobbyService{
     @Override
     public boolean isLobbyValid(String chatLink, Model model) {
         boolean res = true;
-
         if(!personService.isContactLinkValid(chatLink)){
             model.addAttribute("chatLinkErr", true);
             res = false;
         }
-
         return res;
     }
 
