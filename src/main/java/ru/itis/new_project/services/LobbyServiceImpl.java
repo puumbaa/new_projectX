@@ -94,7 +94,7 @@ public class LobbyServiceImpl implements LobbyService{
         Lobby lobby = lobbyRepository.findById(lobbyId).get();
 
         lobby.setEventName(lobbyForm.getEventName());
-        lobby.setBrieflyInfo(lobby.getBrieflyInfo());
+        lobby.setBrieflyInfo(lobbyForm.getBrieflyInfo());
         lobby.setEventDate(LocalDate.parse(lobbyForm.getDate()));
         lobby.setCapacity(lobbyForm.getCapacity());
         lobby.setAboutEvent(lobbyForm.getAboutEvent());

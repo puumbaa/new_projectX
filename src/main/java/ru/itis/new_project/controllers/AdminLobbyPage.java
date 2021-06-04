@@ -41,10 +41,9 @@ public class AdminLobbyPage {
     }
 
 
-    //TODO Валидация по работоспособности чат линка и ивент нейму
-
     @PostMapping("/editinfo")
     public String editLobbyInfo(@PathVariable("id") Long lobbyId, LobbyForm lobbyForm, Model model){
+
         lobbyForm.setChatLink(
                 lobbyForm.getChatLink().contains("https://") ?
                         lobbyForm.getChatLink() : "https://" + lobbyForm.getChatLink()
